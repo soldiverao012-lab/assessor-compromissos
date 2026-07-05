@@ -3,7 +3,7 @@
 Seu assistente pessoal que:
 
 1. **Anota** — você manda uma frase no Telegram (_"reunião com fornecedor amanhã 15h"_) e ele cria o evento no seu Google Calendar.
-2. **Lembra** — a cada 15 min ele confere a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
+2. **Lembra** — a cada 5 min ele confere a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
 3. **Bom dia** — toda manhã às **7h** ele te manda um resumo dos compromissos do dia. ☀️
 4. **Roda sozinho na nuvem** (GitHub Actions), de graça, mesmo com o PC desligado — igualzinho ao seu `publicador/`.
 
@@ -95,7 +95,7 @@ Mesmo esquema do `publicador/`: **esta pasta vira um repositório Git próprio**
    | `GOOGLE_CALENDAR_ID` | seu e-mail do Google (passo 3) |
 
 3. Vá na aba **Actions**, habilite os workflows, abra **"Assessor de Compromissos"** → **Run workflow** pra testar na hora.
-4. Pronto! A partir daí ele roda **a cada 15 minutos** (anotar + lembretes) e manda o **resumo às 7h** (workflow "Resumo Matinal"), tudo sozinho.
+4. Pronto! A partir daí ele roda **a cada 5 minutos** (anotar + lembretes) e manda o **resumo às 7h** (workflow "Resumo Matinal"), tudo sozinho.
 
 > 🕖 Os dois despertadores usam **os mesmos 4 secrets** — não precisa criar nada a mais. Pra testar o resumo na hora: aba **Actions → Resumo Matinal → Run workflow**. Localmente: `python assessor.py --resumo`.
 
@@ -103,7 +103,9 @@ Mesmo esquema do `publicador/`: **esta pasta vira um repositório Git próprio**
 
 ## ❓ Perguntas rápidas
 
-**Demora pra responder?** Na nuvem ele confere a cada ~15 min, então uma anotação pode levar até uns 15 min pra ser confirmada. Lembretes de "1 hora antes" caem com essa mesma folga (ok na prática).
+**Demora pra responder?** Na nuvem ele confere a cada ~5 min, então uma anotação pode levar até uns 5 min pra ser confirmada. Lembretes de "1 hora antes" caem com essa mesma folga (ok na prática).
+
+> ⚠️ Rodar a cada 5 min só cabe no plano grátis se o repositório for **público** (repositório privado tem limite de ~2000 min/mês de Actions; público é ilimitado). Como os segredos ficam nos *Secrets* e não no código, deixar público é seguro.
 
 **Posso mudar os horários dos lembretes?** Sim — edite a lista `LEMBRETES` no `assessor.py` (ex: adicionar 30 min antes).
 
