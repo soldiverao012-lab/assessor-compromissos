@@ -21,6 +21,16 @@ import assessor
 
 
 def _processar(update):
+    # Toque num botão (✅ Concluir / 🗑️ Apagar).
+    callback = update.get("callback_query")
+    if callback:
+        if str((callback.get("from") or {}).get("id")) != str(assessor.TG_CHAT):
+            return
+        svc = assessor.calendario()
+        assessor.tratar_callback(svc, callback)
+        return
+
+    # Mensagem de texto normal.
     msg = update.get("message") or update.get("edited_message")
     if not msg or "text" not in msg:
         return

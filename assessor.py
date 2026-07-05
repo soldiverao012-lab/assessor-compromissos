@@ -91,9 +91,23 @@ def tg(metodo, **params):
     return j["result"]
 
 
-def enviar(texto):
-    """Manda uma mensagem pra você."""
-    tg("sendMessage", chat_id=TG_CHAT, text=texto, parse_mode="Markdown")
+def enviar(texto, botoes=None):
+    """Manda uma mensagem pra você. `botoes` = teclado inline opcional."""
+    params = {"chat_id": TG_CHAT, "text": texto, "parse_mode": "Markdown"}
+    if botoes:
+        params["reply_markup"] = {"inline_keyboard": botoes}
+    tg("sendMessage", **params)
+
+
+def responder_callback(cb_id, texto=""):
+    """Responde o toque num botão (mostra um aviso rápido no topo do Telegram)."""
+    tg("answerCallbackQuery", callback_query_id=cb_id, text=texto)
+
+
+def editar_mensagem(chat_id, message_id, texto):
+    """Reescreve uma mensagem já enviada (e tira os botões dela)."""
+    tg("editMessageText", chat_id=chat_id, message_id=message_id,
+       text=texto, parse_mode="Markdown")
 
 
 def ler_mensagens():
@@ -157,6 +171,29 @@ def eventos_entre(svc, inicio, fim):
         orderBy="startTime",
     ).execute()
     return r.get("items", [])
+
+
+def apagar_evento(svc, event_id):
+    """Remove o compromisso da agenda. Retorna o título (pra mensagem)."""
+    try:
+        ev = svc.events().get(calendarId=CAL_ID, eventId=event_id).execute()
+        titulo = ev.get("summary", "(sem título)")
+    except Exception:
+        titulo = ""
+    svc.events().delete(calendarId=CAL_ID, eventId=event_id).execute()
+    return titulo
+
+
+def concluir_evento(svc, event_id):
+    """Marca como feito: põe ✅ no título e deixa verde. Retorna o título limpo."""
+    ev = svc.events().get(calendarId=CAL_ID, eventId=event_id).execute()
+    original = ev.get("summary", "(sem título)")
+    novo = original if original.startswith("✅") else "✅ " + original
+    svc.events().patch(
+        calendarId=CAL_ID, eventId=event_id,
+        body={"summary": novo, "colorId": "2"},   # colorId 2 = verde (Sálvia)
+    ).execute()
+    return original.replace("✅", "").strip() or "(sem título)"
 
 
 def marcar_lembrete_enviado(svc, evento, rotulo):
@@ -444,8 +481,17 @@ def cmd_lista(svc, dias, titulo):
     if not evs:
         enviar(f"📭 {titulo}: nada por aqui. Aproveita! 🌴")
         return
-    linhas = "\n".join(linha_evento(e) for e in evs)
-    enviar(f"🗓️ *{titulo}:*\n{linhas}")
+    enviar(f"🗓️ *{titulo}:*")
+    # Um compromisso por mensagem, cada um com seus botões.
+    for e in evs:
+        cid = e["id"]
+        botoes = None
+        if len(cid) <= 58:               # limite de 64 bytes do callback_data
+            botoes = [[
+                {"text": "✅ Concluir", "callback_data": f"done:{cid}"},
+                {"text": "🗑️ Apagar",  "callback_data": f"del:{cid}"},
+            ]]
+        enviar(linha_evento(e), botoes=botoes)
 
 
 AJUDA = (
@@ -456,11 +502,38 @@ AJUDA = (
     "• _pagar boleto dia 20_\n"
     "• _treino toda terça e quinta 7h_\n\n"
     "Eu te lembro *1 dia antes* e *1 hora antes* de cada um. 😉\n\n"
+    "No /hoje e /semana, cada compromisso vem com botões pra "
+    "*✅ Concluir* ou *🗑️ Apagar* — é só tocar.\n\n"
     "*Comandos:*\n"
     "/hoje — compromissos de hoje\n"
     "/semana — próximos 7 dias\n"
     "/ajuda — esta mensagem"
 )
+
+
+def tratar_callback(svc, callback):
+    """Trata o toque num botão (✅ Concluir / 🗑️ Apagar)."""
+    if str((callback.get("from") or {}).get("id")) != str(TG_CHAT):
+        return                                   # só você
+    cb_id = callback.get("id")
+    msg = callback.get("message") or {}
+    chat_id = (msg.get("chat") or {}).get("id")
+    message_id = msg.get("message_id")
+    acao, _, event_id = (callback.get("data") or "").partition(":")
+    try:
+        if acao == "del":
+            titulo = apagar_evento(svc, event_id)
+            responder_callback(cb_id, "🗑️ Apagado!")
+            editar_mensagem(chat_id, message_id, f"🗑️ _Apagado:_ {titulo}")
+        elif acao == "done":
+            titulo = concluir_evento(svc, event_id)
+            responder_callback(cb_id, "✅ Concluído!")
+            editar_mensagem(chat_id, message_id, f"✅ *Concluído:* {titulo}")
+        else:
+            responder_callback(cb_id, "Não entendi esse botão.")
+    except Exception as e:
+        print("erro no callback:", e)
+        responder_callback(cb_id, "😵 Deu um erro aqui.")
 
 
 def tratar_mensagem(svc, texto):
