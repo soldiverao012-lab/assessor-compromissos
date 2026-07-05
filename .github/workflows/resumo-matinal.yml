@@ -2,8 +2,8 @@ name: Resumo Matinal
 
 on:
   schedule:
-    # 08:30 no horário de Brasília (UTC-3) = 11:30 UTC.
-    - cron: "30 11 * * *"
+    # 07:00 no horário de Brasília (UTC-3) = 10:00 UTC.
+    - cron: "0 10 * * *"
   workflow_dispatch:        # botão pra testar na hora
 
 concurrency:

@@ -4,7 +4,7 @@ Seu assistente pessoal que:
 
 1. **Anota** — você manda uma frase no Telegram (_"reunião com fornecedor amanhã 15h"_) e ele cria o evento no seu Google Calendar.
 2. **Lembra** — a cada 15 min ele confere a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
-3. **Bom dia** — toda manhã às **8:30** ele te manda um resumo dos compromissos do dia. ☀️
+3. **Bom dia** — toda manhã às **7h** ele te manda um resumo dos compromissos do dia. ☀️
 4. **Roda sozinho na nuvem** (GitHub Actions), de graça, mesmo com o PC desligado — igualzinho ao seu `publicador/`.
 
 **Comandos no Telegram:** `/hoje` • `/semana` • `/ajuda`
@@ -95,7 +95,7 @@ Mesmo esquema do `publicador/`: **esta pasta vira um repositório Git próprio**
    | `GOOGLE_CALENDAR_ID` | seu e-mail do Google (passo 3) |
 
 3. Vá na aba **Actions**, habilite os workflows, abra **"Assessor de Compromissos"** → **Run workflow** pra testar na hora.
-4. Pronto! A partir daí ele roda **a cada 15 minutos** (anotar + lembretes) e manda o **resumo às 8:30** (workflow "Resumo Matinal"), tudo sozinho.
+4. Pronto! A partir daí ele roda **a cada 15 minutos** (anotar + lembretes) e manda o **resumo às 7h** (workflow "Resumo Matinal"), tudo sozinho.
 
 > 🕖 Os dois despertadores usam **os mesmos 4 secrets** — não precisa criar nada a mais. Pra testar o resumo na hora: aba **Actions → Resumo Matinal → Run workflow**. Localmente: `python assessor.py --resumo`.
 
