@@ -1,0 +1,10 @@
+# Segredos — NUNCA sobem pro GitHub
+.env
+# Nenhum .json é versionado (credenciais do Google são sempre .json).
+*.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

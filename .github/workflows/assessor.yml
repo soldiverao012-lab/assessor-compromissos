@@ -1,0 +1,36 @@
+name: Assessor de Compromissos
+
+on:
+  schedule:
+    # A cada 15 minutos. (O GitHub às vezes atrasa alguns minutos — normal.)
+    - cron: "*/15 * * * *"
+  workflow_dispatch:        # botão pra rodar na mão quando quiser testar
+
+# Evita duas execuções ao mesmo tempo.
+concurrency:
+  group: assessor
+  cancel-in-progress: false
+
+jobs:
+  rodar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Preparar credencial do Google
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > google_credentials.json
+
+      - name: Rodar o assessor
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          GOOGLE_CREDENTIALS_FILE: google_credentials.json
+        run: python assessor.py
