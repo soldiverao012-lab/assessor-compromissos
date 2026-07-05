@@ -1,7 +1,9 @@
 # Segredos — NUNCA sobem pro GitHub
 .env
-# Nenhum .json é versionado (credenciais do Google são sempre .json).
+# Nenhum .json é versionado (credenciais do Google são sempre .json)...
 *.json
+# ...exceto o vercel.json, que é só configuração (não tem segredo).
+!vercel.json
 
 # Python
 __pycache__/
