@@ -1,8 +1,9 @@
-name: Assessor de Compromissos
+name: Lembretes do Assessor
 
 on:
   schedule:
-    # A cada 5 minutos. (O GitHub às vezes atrasa alguns minutos — normal.)
+    # A cada 5 minutos, confere a agenda e dispara lembretes (1 dia / 1h antes).
+    # As MENSAGENS que você envia são tratadas na hora pelo webhook (Vercel).
     - cron: "*/5 * * * *"
   workflow_dispatch:        # botão pra rodar na mão quando quiser testar
 
@@ -27,10 +28,10 @@ jobs:
       - name: Preparar credencial do Google
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > google_credentials.json
 
-      - name: Rodar o assessor
+      - name: Enviar lembretes
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
           GOOGLE_CREDENTIALS_FILE: google_credentials.json
-        run: python assessor.py
+        run: python assessor.py --lembretes

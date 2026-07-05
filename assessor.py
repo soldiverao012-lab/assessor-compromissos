@@ -22,6 +22,7 @@ Uso local (pra testar):  python assessor.py
 import os
 import re
 import sys
+import json
 import requests
 from datetime import datetime, timedelta, date, time as dtime
 from zoneinfo import ZoneInfo
@@ -72,8 +73,10 @@ def checar_credenciais():
         "TELEGRAM_BOT_TOKEN": TG_TOKEN,
         "TELEGRAM_CHAT_ID":   TG_CHAT,
     }.items() if not v]
-    if not os.path.exists(GOOGLE_CRED_FILE):
-        faltando.append(f"arquivo {GOOGLE_CRED_FILE} (credencial do Google)")
+    # A credencial do Google pode vir de um arquivo (local/GitHub) OU
+    # de uma variável de ambiente GOOGLE_CREDENTIALS com o JSON (Vercel).
+    if not os.getenv("GOOGLE_CREDENTIALS") and not os.path.exists(GOOGLE_CRED_FILE):
+        faltando.append("credencial do Google (arquivo ou variável GOOGLE_CREDENTIALS)")
     if faltando:
         raise SystemExit("❌ Faltam credenciais: " + ", ".join(faltando))
 
@@ -116,8 +119,14 @@ def ler_mensagens():
 
 # ── Google Calendar ──────────────────────────────────────────────────────────
 def calendario():
-    cred = service_account.Credentials.from_service_account_file(
-        GOOGLE_CRED_FILE, scopes=["https://www.googleapis.com/auth/calendar"])
+    escopo = ["https://www.googleapis.com/auth/calendar"]
+    cred_json = os.getenv("GOOGLE_CREDENTIALS")   # JSON direto na variável (Vercel)
+    if cred_json:
+        cred = service_account.Credentials.from_service_account_info(
+            json.loads(cred_json), scopes=escopo)
+    else:                                          # arquivo (local / GitHub Actions)
+        cred = service_account.Credentials.from_service_account_file(
+            GOOGLE_CRED_FILE, scopes=escopo)
     return build("calendar", "v3", credentials=cred, cache_discovery=False)
 
 
@@ -537,6 +546,13 @@ def main():
         print("   ☀️ enviando resumo matinal")
         resumo_matinal(svc)
         print("   ✅ resumo enviado")
+        return
+
+    # Modo "só lembretes": não lê mensagens (usado quando o webhook está ativo).
+    if "--lembretes" in sys.argv:
+        print("   ⏰ enviando lembretes")
+        enviar_lembretes(svc)
+        print("   ✅ lembretes enviados")
         return
 
     mensagens = ler_mensagens()
