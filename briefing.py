@@ -126,15 +126,31 @@ def bloco_financeiro(agora):
 
     partes = ["💰 *Financeiro*"]
     if vence_hoje:
-        total = sum(v for _, v, _ in vence_hoje)
-        partes.append(f"  _Vence hoje_ ({_dinheiro(abs(total))}):")
+        # Sair e entrar são somados SEPARADAMENTE de propósito: juntar os dois dá
+        # o líquido, e um líquido no lugar do "a pagar" engana — mostraria
+        # R$ 1.981 de total numa lista que tem uma conta de R$ 2.800.
+        sai = sum(-v for _, v, _ in vence_hoje if v < 0)
+        entra = sum(v for _, v, _ in vence_hoje if v > 0)
+        resumo = []
+        if sai:
+            resumo.append(f"sai {_dinheiro(sai)}")
+        if entra:
+            resumo.append(f"entra {_dinheiro(entra)}")
+        partes.append(f"  _Vence hoje_ ({', '.join(resumo)}):")
         for _, valor, desc in sorted(vence_hoje, key=lambda x: x[1]):
             sinal = "🔴" if valor < 0 else "🟢"
             partes.append(f"  {sinal} {desc} — {_dinheiro(abs(valor))}")
     if atrasados:
-        total = sum(v for _, v, _ in atrasados)
-        partes.append(f"  ⚠️ _Atrasado_: {len(atrasados)} lançamento(s), "
-                      f"{_dinheiro(abs(total))}")
+        # Mesma regra do "vence hoje": nada de líquido disfarçado de total.
+        sai = sum(-v for _, v, _ in atrasados if v < 0)
+        entra = sum(v for _, v, _ in atrasados if v > 0)
+        resumo = []
+        if sai:
+            resumo.append(f"a pagar {_dinheiro(sai)}")
+        if entra:
+            resumo.append(f"a receber {_dinheiro(entra)}")
+        partes.append(f"  ⚠️ _Atrasado_: {len(atrasados)} lançamento(s) — "
+                      + ", ".join(resumo))
         for d, valor, desc in sorted(atrasados)[:5]:
             partes.append(f"  · {d.strftime('%d/%m')} {desc} — {_dinheiro(abs(valor))}")
         if len(atrasados) > 5:
