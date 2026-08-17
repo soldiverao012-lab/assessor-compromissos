@@ -2,19 +2,24 @@ name: Lembretes do Assessor
 
 on:
   schedule:
-    # A cada 5 minutos, confere a agenda e dispara lembretes (1 dia / 1h antes).
-    # As MENSAGENS que você envia são tratadas na hora pelo webhook (Vercel).
+    # Pedimos a cada 5 min, mas o GitHub estrangula o agendamento e na prática
+    # abre buracos de 20 a 45 min. Por isso o job não confere uma vez e morre:
+    # ele roda em modo --vigia, ficando de pé conferindo a cada 2 min. Assim a
+    # cobertura é contínua e o lembrete de "1 hora antes" chega na hora certa.
     - cron: "*/5 * * * *"
   workflow_dispatch:        # botão pra rodar na mão quando quiser testar
 
-# Evita duas execuções ao mesmo tempo.
+# Um vigia por vez. cancel-in-progress: o disparo novo assume o lugar do antigo,
+# em vez de ficar na fila esperando o vigia anterior terminar (o que deixaria
+# buracos ainda maiores na cobertura).
 concurrency:
   group: assessor
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   rodar:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -28,10 +33,10 @@ jobs:
       - name: Preparar credencial do Google
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > google_credentials.json
 
-      - name: Enviar lembretes
+      - name: Vigiar a agenda e enviar lembretes
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
           GOOGLE_CREDENTIALS_FILE: google_credentials.json
-        run: python assessor.py --lembretes
+        run: python assessor.py --vigia --minutos 25

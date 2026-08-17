@@ -3,13 +3,53 @@
 Seu assistente pessoal que:
 
 1. **Anota** — você manda uma frase no Telegram (_"reunião com fornecedor amanhã 15h"_) e ele cria o evento no seu Google Calendar.
-2. **Lembra** — a cada 5 min ele confere a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
-3. **Bom dia** — toda manhã às **7h** ele te manda um resumo dos compromissos do dia. ☀️
+2. **Lembra** — fica vigiando a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
+3. **Briefing do dia** — toda manhã às **7h** chega um recado só com **agenda + financeiro + vendas + e-mails**. ☀️ (veja abaixo)
 4. **Roda sozinho na nuvem** (GitHub Actions), de graça, mesmo com o PC desligado — igualzinho ao seu `publicador/`.
 
 **Comandos no Telegram:** `/hoje` • `/semana` • `/ajuda`
 
-> 💚 **100% gratuito.** O assessor entende as datas em português por conta própria (offline), sem nenhuma API paga.
+> 💚 **100% gratuito.** O assessor entende as datas em português por conta própria (offline), sem nenhuma API paga. O briefing também: o Gmail é lido por IMAP com senha de app, não por API paga.
+
+---
+
+## ☀️ O Briefing do dia (`briefing.py`)
+
+Às 7h chega **uma mensagem só** juntando tudo que importa pro dia:
+
+| Bloco | De onde vem | Chaves que liga |
+|---|---|---|
+| 📅 **Agenda** | Google Calendar | já vem ligado |
+| 💰 **Financeiro** | API do Granatum — o que **vence hoje** e o que está **atrasado** | `GRANATUM_TOKEN`, `GRANATUM_CONTA_ID` |
+| 🛒 **Vendas** | API da Shopify — pedidos de **ontem** e ticket médio | `SHOPIFY_STORE`, `SHOPIFY_TOKEN`, `SHOPIFY_API_VERSION` |
+| 📬 **E-mails** | Gmail por IMAP — **não lidos** desde ontem | `GMAIL_USER`, `GMAIL_APP_PASSWORD` |
+
+**Cada fonte é opcional e independente:**
+
+- Sem as chaves de uma fonte, aquele bloco **simplesmente não aparece** — nada quebra.
+- Se uma fonte cair (API fora do ar, senha trocada), o briefing chega assim mesmo, com um `⚠️ fonte indisponível` só naquele bloco. **Um serviço ruim nunca cancela o seu bom dia.**
+
+Pra ver como ficou **sem enviar nada**:
+
+```powershell
+.venv\Scripts\python briefing.py --teste
+```
+
+> 🏪 **O PDV da loja física não entra** no briefing: o banco dele é um SQLite que
+> mora no PC da loja, e o GitHub Actions não enxerga sua máquina. Pra incluir as
+> vendas do balcão seria preciso expor um endpoint de leitura na cópia da nuvem
+> (veja `pdv/app/sync_nuvem.py`).
+
+---
+
+## 🩺 Quando algo parecer parado
+
+```powershell
+.venv\Scripts\python diagnostico.py
+```
+
+Confere, uma por uma: chaves do `.env`, bot do Telegram, webhook, acesso à agenda e o
+entendimento de datas. Só leitura — não manda mensagem nem cria evento.
 
 ---
 

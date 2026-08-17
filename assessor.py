@@ -23,6 +23,7 @@ import os
 import re
 import sys
 import json
+import time
 import requests
 from datetime import datetime, timedelta, date, time as dtime
 from zoneinfo import ZoneInfo
@@ -56,6 +57,9 @@ LEMBRETES = [
     ("1d", timedelta(days=1)),
     ("1h", timedelta(hours=1)),
 ]
+
+# De quanto em quanto tempo o modo --vigia confere a agenda (segundos).
+INTERVALO_VIGIA = 120
 
 MESES = ["", "jan", "fev", "mar", "abr", "mai", "jun",
          "jul", "ago", "set", "out", "nov", "dez"]
@@ -626,6 +630,36 @@ def main():
         print("   ⏰ enviando lembretes")
         enviar_lembretes(svc)
         print("   ✅ lembretes enviados")
+        return
+
+    # Modo "vigia": fica de pé conferindo de tempos em tempos.
+    #
+    # Por que existe: o GitHub Actions PROMETE rodar a cada 5 min, mas na prática
+    # estrangula o agendamento e abre buracos de 20 a 45 min. Como o job em si é
+    # barato, em vez de conferir uma vez e morrer, ele fica vigiando enquanto
+    # está de pé — assim o "daqui 1 hora" chega perto da hora certa, e não a 15
+    # minutos do compromisso.
+    if "--vigia" in sys.argv:
+        minutos = 25
+        if "--minutos" in sys.argv:
+            try:
+                minutos = int(sys.argv[sys.argv.index("--minutos") + 1])
+            except (IndexError, ValueError):
+                pass
+        fim = time.monotonic() + minutos * 60
+        rodada = 0
+        print(f"   👀 vigiando por {minutos} min (confere a cada {INTERVALO_VIGIA}s)")
+        while True:
+            rodada += 1
+            try:
+                enviar_lembretes(svc)
+            except Exception as e:
+                # Uma falha de rede não pode derrubar o vigia — ele tenta de novo.
+                print(f"   ⚠️ rodada {rodada} falhou: {e}")
+            if time.monotonic() + INTERVALO_VIGIA >= fim:
+                break
+            time.sleep(INTERVALO_VIGIA)
+        print(f"   ✅ vigia encerrado após {rodada} rodada(s)")
         return
 
     mensagens = ler_mensagens()

@@ -1,4 +1,4 @@
-name: Resumo Matinal
+name: Briefing do Dia
 
 on:
   schedule:
@@ -13,6 +13,7 @@ concurrency:
 jobs:
   resumo:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -26,10 +27,19 @@ jobs:
       - name: Preparar credencial do Google
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > google_credentials.json
 
-      - name: Enviar resumo do dia
+      - name: Enviar briefing do dia
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
           GOOGLE_CREDENTIALS_FILE: google_credentials.json
-        run: python assessor.py --resumo
+          # Fontes extras do briefing. Cada uma é opcional: se o Secret não
+          # existir, o bloco correspondente simplesmente não aparece.
+          GRANATUM_TOKEN:      ${{ secrets.GRANATUM_TOKEN }}
+          GRANATUM_CONTA_ID:   ${{ secrets.GRANATUM_CONTA_ID }}
+          SHOPIFY_STORE:       ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_TOKEN:       ${{ secrets.SHOPIFY_TOKEN }}
+          SHOPIFY_API_VERSION: ${{ secrets.SHOPIFY_API_VERSION }}
+          GMAIL_USER:          ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD:  ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python briefing.py
