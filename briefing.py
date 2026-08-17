@@ -76,6 +76,47 @@ def bloco_agenda(svc, agora):
     return cabeca + "\n" + "\n".join(linhas)
 
 
+# ── 🔭 No radar (próximos dias) ──────────────────────────────────────────────
+# Quantos dias à frente o radar enxerga. Uma semana: é o horizonte em que dá pra
+# se preparar pra um evento de mercado, e casa com o comando /semana do bot.
+DIAS_RADAR = 7
+# Quantas linhas o radar mostra antes de resumir o resto.
+MAX_RADAR = 6
+
+
+def bloco_radar(svc, agora):
+    """
+    O que vem NOS PRÓXIMOS DIAS — não hoje.
+
+    Existe porque o bloco de agenda cobre só o dia corrente, e tem compromisso
+    que não adianta descobrir na manhã dele: evento de mercado (FOMC, payroll)
+    você quer ver chegando com dias de antecedência pra se posicionar. O lembrete
+    de "1 dia antes" avisa, mas avisa tarde pra esse tipo de coisa.
+    """
+    inicio = agora.replace(hour=23, minute=59, second=59)  # a partir de amanhã
+    fim = agora + timedelta(days=DIAS_RADAR)
+    evs = app.eventos_entre(svc, inicio, fim)
+    if not evs:
+        return None  # nada à frente: não polui o briefing
+
+    linhas = []
+    for ev in evs:
+        ini = ev["start"].get("dateTime")
+        if not ini:
+            continue
+        d = datetime.fromisoformat(ini).astimezone(TZ)
+        dias = (d.date() - agora.date()).days
+        quando = "amanhã" if dias == 1 else f"{app.DIAS_SEMANA[d.weekday()]} {d.day:02d}/{d.month:02d}"
+        linhas.append(f"  · {quando} {d.strftime('%H:%M')} — {_limpar(ev.get('summary'), 45)}")
+
+    if not linhas:
+        return None
+    mostradas = linhas[:MAX_RADAR]
+    if len(linhas) > MAX_RADAR:
+        mostradas.append(f"  · … e mais {len(linhas) - MAX_RADAR}")
+    return f"🔭 *No radar* (7 dias)\n" + "\n".join(mostradas)
+
+
 # ── 💰 Financeiro (Granatum) ─────────────────────────────────────────────────
 def bloco_financeiro(agora):
     token = os.getenv("GRANATUM_TOKEN")
@@ -243,6 +284,7 @@ def bloco_email(agora):
 # ── Montagem ─────────────────────────────────────────────────────────────────
 FONTES = [
     ("agenda",     bloco_agenda,     True),   # True = precisa do serviço do Calendar
+    ("radar",      bloco_radar,      True),
     ("financeiro", bloco_financeiro, False),
     ("vendas",     bloco_vendas,     False),
     ("e-mail",     bloco_email,      False),
