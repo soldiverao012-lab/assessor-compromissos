@@ -5,6 +5,9 @@
 # ...exceto o vercel.json, que é só configuração (não tem segredo).
 !vercel.json
 
+# Anotações locais com segredo dentro (ex: valores pra colar no GitHub).
+*.local.md
+
 # Python
 __pycache__/
 *.pyc
