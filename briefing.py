@@ -24,6 +24,7 @@ import email
 import imaplib
 import os
 import sys
+import time
 from datetime import datetime, timedelta
 from email.header import decode_header, make_header
 
@@ -118,28 +119,101 @@ def bloco_radar(svc, agora):
 
 
 # ── 💰 Financeiro (Granatum) ─────────────────────────────────────────────────
+GRANATUM_BASE = "https://api.granatum.com.br/v1"
+# Quantos dias pra trás procurar atrasado. Conta esquecida fica meses em aberto.
+DIAS_ATRASO = 180
+# Quantos atrasados listar antes de resumir o resto.
+MAX_ATRASADOS = 6
+
+
+def _granatum_contas(token):
+    """IDs de TODAS as contas ativas, perguntando ao Granatum na hora.
+
+    De propósito não existe lista fixa aqui. O briefing nasceu com as duas
+    contas do projeto do extrato (que só tem duas porque só há dois extratos
+    bancários) e, por isso, os vencimentos do CAIXA e do Cartão Empresarial
+    nunca apareciam — sem erro, sem aviso, só sumiam. Conta nova criada no
+    Granatum passa a ser vista sozinha, sem mexer em configuração.
+    """
+    r = requests.get(f"{GRANATUM_BASE}/contas", params={"access_token": token}, timeout=30)
+    r.raise_for_status()
+    return [str(c["id"]) for c in (r.json() or []) if c.get("ativo", True)]
+
+
+# A API devolve no máximo 50 lançamentos por consulta — e são os 50 mais
+# ANTIGOS do período pedido.
+TETO_RESPOSTA = 50
+# Profundidade máxima do corte (180 dias / 2^6 ≈ 3 dias por fatia).
+MAX_CORTES = 6
+# Teto de chamadas por rodada, pra não esbarrar no rate limit (100/min).
+MAX_CHAMADAS = 90
+
+
+def _granatum_periodo(token, conta_id, inicio, fim, orcamento, profundidade=0):
+    """
+    Lançamentos da conta entre duas datas, cortando o período quando necessário.
+
+    Por que não é uma consulta só: a API **ignora o parâmetro `page`** (pedir
+    página 2 devolve exatamente a página 1) e corta a resposta em 50 itens,
+    ficando com os mais ANTIGOS. Numa janela de 180 dias os 50 mais antigos são
+    de fevereiro, então março em diante simplesmente não existe para quem
+    pergunta — foi assim que IPTU, férias e mensalidades sumiram do briefing.
+
+    Sem paginação, a única saída é perguntar por períodos curtos. Em vez de
+    chutar um tamanho fixo (mês trunca em mês movimentado; semana desperdiça
+    chamada em mês parado), o período se parte ao meio toda vez que a resposta
+    vem no teto — o corte se ajusta sozinho ao movimento de cada conta.
+    """
+    if orcamento[0] <= 0:
+        return []
+    orcamento[0] -= 1
+
+    r = requests.get(
+        f"{GRANATUM_BASE}/lancamentos",
+        params={"access_token": token, "conta_id": conta_id,
+                "data_inicio": inicio.isoformat(), "data_fim": fim.isoformat()},
+        timeout=30,
+    )
+    r.raise_for_status()
+    dados = r.json() or []
+
+    # Veio abaixo do teto: com certeza é tudo o que existe nesse intervalo.
+    if len(dados) < TETO_RESPOSTA:
+        return dados
+    # Bateu no teto e não dá mais pra cortar: devolve o que veio.
+    if inicio >= fim or profundidade >= MAX_CORTES:
+        return dados
+
+    time.sleep(0.3)  # gentileza com o rate limit
+    meio = inicio + (fim - inicio) / 2
+    esquerda = _granatum_periodo(token, conta_id, inicio, meio, orcamento, profundidade + 1)
+    direita = _granatum_periodo(token, conta_id, meio + timedelta(days=1), fim,
+                                orcamento, profundidade + 1)
+    return esquerda + direita
+
+
+def _granatum_lancamentos(token, conta_id, inicio, fim, orcamento):
+    """Lançamentos únicos da conta no período (o corte pode repetir itens)."""
+    vistos, unicos = set(), []
+    for l in _granatum_periodo(token, conta_id, inicio, fim, orcamento):
+        if l.get("id") not in vistos:
+            vistos.add(l.get("id"))
+            unicos.append(l)
+    return unicos
+
+
 def bloco_financeiro(agora):
     token = os.getenv("GRANATUM_TOKEN")
-    contas = [c.strip() for c in os.getenv("GRANATUM_CONTA_ID", "").split(",") if c.strip()]
-    if not token or not contas:
+    if not token:
         return None  # fonte não configurada — bloco não aparece
 
     hoje = agora.date()
-    # Olhamos 90 dias pra trás pra capturar o que venceu e ficou pra trás.
-    inicio = (hoje - timedelta(days=90)).isoformat()
+    inicio = hoje - timedelta(days=DIAS_ATRASO)
 
+    orcamento = [MAX_CHAMADAS]  # compartilhado entre as contas
     lancamentos = []
-    for conta in contas:
-        # Sem 'tipo' a API devolve TUDO, inclusive os atrasados — os filtros por
-        # tipo deixam os atrasados de fora (aprendido no projeto granatum/).
-        r = requests.get(
-            "https://api.granatum.com.br/v1/lancamentos",
-            params={"access_token": token, "conta_id": conta,
-                    "data_inicio": inicio, "data_fim": hoje.isoformat()},
-            timeout=30,
-        )
-        r.raise_for_status()
-        lancamentos.extend(r.json() or [])
+    for conta in _granatum_contas(token):
+        lancamentos.extend(_granatum_lancamentos(token, conta, inicio, hoje, orcamento))
 
     vence_hoje, atrasados = [], []
     for l in lancamentos:
@@ -192,10 +266,16 @@ def bloco_financeiro(agora):
             resumo.append(f"a receber {_dinheiro(entra)}")
         partes.append(f"  ⚠️ _Atrasado_: {len(atrasados)} lançamento(s) — "
                       + ", ".join(resumo))
-        for d, valor, desc in sorted(atrasados)[:5]:
+        # Ordem: mais RECENTE primeiro e, dentro do mesmo dia, o de MAIOR valor.
+        # O que venceu ontem ainda dá pra resolver hoje; o de seis meses atrás
+        # já virou faxina de outro dia. E o critério de valor importa: ordenando
+        # só por data, uma conta de R$ 2.051 caía no "… e mais N" enquanto seis
+        # contas de R$ 121 ocupavam a lista.
+        ordenados = sorted(atrasados, key=lambda x: (x[0], abs(x[1])), reverse=True)
+        for d, valor, desc in ordenados[:MAX_ATRASADOS]:
             partes.append(f"  · {d.strftime('%d/%m')} {desc} — {_dinheiro(abs(valor))}")
-        if len(atrasados) > 5:
-            partes.append(f"  · … e mais {len(atrasados) - 5}")
+        if len(atrasados) > MAX_ATRASADOS:
+            partes.append(f"  · … e mais {len(atrasados) - MAX_ATRASADOS}")
     return "\n".join(partes)
 
 

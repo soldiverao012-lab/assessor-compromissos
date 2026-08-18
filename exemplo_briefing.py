@@ -41,14 +41,36 @@ AGENDA = [
     {"start": {"dateTime": _iso(16, 30)}, "summary": "Fechar a fatura da Stone"},
 ]
 
+# Eventos dos próximos dias, pro bloco "No radar".
+def _futuro(dias, hora, minuto=0):
+    d = (HOJE + timedelta(days=dias)).replace(hour=hora, minute=minuto)
+    return d.isoformat()
+
+
+RADAR = [
+    {"start": {"dateTime": _futuro(1, 10, 0)},  "summary": "Entrega do tecido novo"},
+    {"start": {"dateTime": _futuro(2, 14, 0)},  "summary": "🚨 ALTO IMPACTO USD — FOMC"},
+    {"start": {"dateTime": _futuro(5, 9, 0)},   "summary": "Feirão de verão — montar estande"},
+]
+
+# As duas contas do Granatum (resposta de GET /contas).
+CONTAS = [
+    {"id": 110255, "descricao": "SOL DI VERAO", "ativo": True},
+    {"id": 61913,  "descricao": "M.O FRANCISCO", "ativo": True},
+]
+
+# O 'id' importa: o briefing deduplica por ele (o corte por período pode
+# devolver o mesmo lançamento duas vezes). Sem id, tudo virava um item só.
 LANCAMENTOS = [
-    {"descricao": "Aluguel da loja",     "valor": "-2800.00", "data_vencimento": HOJE.date().isoformat()},
-    {"descricao": "Energia CPFL",        "valor": "-431.70",  "data_vencimento": HOJE.date().isoformat()},
-    {"descricao": "Recebimento Cielo",   "valor": "1250.40",  "data_vencimento": HOJE.date().isoformat()},
-    {"descricao": "SIMPLES/MEI",         "valor": "-81.90",   "data_vencimento": (HOJE - timedelta(days=82)).date().isoformat()},
-    {"descricao": "SIMPLES/MEI",         "valor": "-76.90",   "data_vencimento": (HOJE - timedelta(days=82)).date().isoformat()},
-    {"descricao": "Internet Vivo",       "valor": "-159.90",  "data_vencimento": (HOJE - timedelta(days=6)).date().isoformat()},
-    {"descricao": "Ja foi pago (some)",  "valor": "-500.00",  "data_vencimento": HOJE.date().isoformat(),
+    {"id": 1, "descricao": "Aluguel da loja",   "valor": "-2800.00", "data_vencimento": HOJE.date().isoformat()},
+    {"id": 2, "descricao": "Energia CPFL",      "valor": "-431.70",  "data_vencimento": HOJE.date().isoformat()},
+    {"id": 3, "descricao": "Recebimento Cielo", "valor": "1250.40",  "data_vencimento": HOJE.date().isoformat()},
+    {"id": 4, "descricao": "FERIAS ROMILDA",    "valor": "-2051.00", "data_vencimento": (HOJE - timedelta(days=1)).date().isoformat()},
+    {"id": 5, "descricao": "IPTU",              "valor": "-325.79",  "data_vencimento": (HOJE - timedelta(days=1)).date().isoformat()},
+    {"id": 6, "descricao": "Internet Vivo",     "valor": "-159.90",  "data_vencimento": (HOJE - timedelta(days=6)).date().isoformat()},
+    {"id": 7, "descricao": "SIMPLES/MEI",       "valor": "-81.90",   "data_vencimento": (HOJE - timedelta(days=82)).date().isoformat()},
+    {"id": 8, "descricao": "SIMPLES/MEI",       "valor": "-76.90",   "data_vencimento": (HOJE - timedelta(days=82)).date().isoformat()},
+    {"id": 9, "descricao": "Ja foi pago (some)", "valor": "-500.00", "data_vencimento": HOJE.date().isoformat(),
      "data_pagamento": HOJE.date().isoformat()},
 ]
 
@@ -74,13 +96,20 @@ class _Resposta:
 
 
 def _get_falso(url, **kwargs):
+    if url.endswith("/contas"):
+        return _Resposta(CONTAS)
     if "granatum" in url:
-        # As duas contas: devolve a metade dos lançamentos em cada uma.
+        # Só a primeira conta tem movimento; a outra volta vazia.
         conta = str(kwargs.get("params", {}).get("conta_id"))
         return _Resposta(LANCAMENTOS if conta == "110255" else [])
     if "myshopify" in url:
         return _Resposta({"orders": PEDIDOS})
     raise AssertionError(f"URL inesperada no exemplo: {url}")
+
+
+def _eventos_falsos(svc, inicio, fim):
+    """Devolve a agenda de hoje ou o radar, conforme o período pedido."""
+    return AGENDA if inicio.date() == HOJE.date() and inicio.hour < 23 else RADAR
 
 
 class _ImapFalso:
@@ -107,7 +136,7 @@ class _ImapFalso:
 
 briefing.requests.get = _get_falso
 briefing.imaplib.IMAP4_SSL = _ImapFalso
-app.eventos_entre = lambda svc, inicio, fim: AGENDA
+app.eventos_entre = _eventos_falsos
 
 
 # ── Renderiza ────────────────────────────────────────────────────────────────
