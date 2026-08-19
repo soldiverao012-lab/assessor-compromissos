@@ -232,20 +232,41 @@ def carregar():
 
 ARQUIVO_ERRO = Path(__file__).resolve().parent / "state" / "ultimo_erro.txt"
 
+# A partir de quantas horas de dado parado o problema vira SEU problema.
+# Abaixo disso, uma queda do Granatum não merece te acordar: a foto anterior
+# ainda responde bem e o serviço deles costuma voltar sozinho.
+HORAS_ATE_INCOMODAR = 6
+
+
+def _idade_da_foto():
+    """Há quantas horas é a fotografia atual? None se não existe."""
+    dados = carregar()
+    if not dados:
+        return None
+    try:
+        quando = datetime.fromisoformat(dados["atualizado_em"])
+    except (KeyError, ValueError):
+        return None
+    return (datetime.now(quando.tzinfo) - quando).total_seconds() / 3600
+
 
 def registrar_falha(erro):
     """
-    Deixa o motivo da falha VISÍVEL, em vez de morrer calado.
+    Deixa o motivo VISÍVEL e decide se isso merece incomodar o dono.
 
-    O robô roda sozinho na nuvem, e o log do GitHub só é legível com login.
-    Quando a fotografia quebra, o bot continua respondendo com dado velho e
-    ninguém percebe — foi exatamente o que aconteceu. Então o erro vai para
-    dois lugares: um arquivo que o workflow commita (dá pra ler de qualquer
-    lugar, e fica o histórico) e um aviso no Telegram.
+    O robô roda sozinho, e o log do GitHub só é legível com login. Quando a
+    coleta quebra, o bot segue respondendo com dado velho e ninguém percebe.
+    Então o motivo sempre vai para um arquivo que o workflow commita.
+
+    Mas nem toda falha merece alarme: o Granatum cai de vez em quando e volta
+    sozinho. Avisar a cada hora durante uma queda dele vira ruído, e ruído faz
+    a pessoa ignorar o aviso que importa. Só incomoda quando o dado realmente
+    envelheceu. Devolve True se é caso de alarme.
     """
     import traceback
     texto = traceback.format_exc()
-    quando = datetime.now(app.TZ).strftime("%d/%m %H:%M")
+    agora = datetime.now(app.TZ)
+    quando = agora.strftime("%d/%m %H:%M")
 
     try:
         ARQUIVO_ERRO.parent.mkdir(parents=True, exist_ok=True)
@@ -253,14 +274,21 @@ def registrar_falha(erro):
     except Exception as e:
         print("nao consegui gravar o arquivo de erro:", e)
 
+    idade = _idade_da_foto()
+    if idade is not None and idade < HORAS_ATE_INCOMODAR:
+        print(f"   (foto atual tem {idade:.1f}h — ainda serve, não vou alarmar)")
+        return False
+
     try:
-        resumo = str(erro)[:250] or type(erro).__name__
-        app.enviar(f"⚠️ *A fotografia do financeiro falhou* ({quando})\n\n"
+        resumo = str(erro)[:200] or type(erro).__name__
+        quanto = f"de {idade:.0f}h atrás" if idade else "inexistente"
+        app.enviar(f"⚠️ *Não consigo atualizar o financeiro* ({quando})\n\n"
+                   f"O dado que estou usando é {quanto}.\n\n"
                    f"`{resumo}`\n\n"
-                   "_As respostas sobre contas continuam vindo do dado anterior "
-                   "até isso ser resolvido._")
+                   "_Compromissos, lembretes e agenda seguem normais._")
     except Exception as e:
         print("nao consegui avisar no Telegram:", e)
+    return True
 
 
 def main():
@@ -268,8 +296,11 @@ def main():
         dados = coletar()
     except Exception as e:
         print("❌ falhou ao coletar:", e)
-        registrar_falha(e)
-        raise SystemExit(1)
+        grave = registrar_falha(e)
+        # Job vermelho só quando é caso de agir. Se a foto anterior ainda
+        # serve, uma queda passageira do Granatum não é problema NOSSO — e
+        # e-mail de falha toda hora ensina a pessoa a ignorar o alerta.
+        raise SystemExit(1 if grave else 0)
 
     caminho = salvar(dados)
     # Deu certo: apaga o erro antigo, senão fica parecendo que ainda está quebrado.

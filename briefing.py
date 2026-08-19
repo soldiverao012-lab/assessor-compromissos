@@ -141,8 +141,12 @@ def _granatum_sessao():
         from requests.adapters import HTTPAdapter
         from urllib3.util.retry import Retry
         _sessao = requests.Session()
+        _sessao.headers.update({"User-Agent": "assessor-soldiverao/1.0"})
+        # Paciência de ~90s no total. O Granatum tem quedas curtas (já foi visto
+        # devolvendo 502 em série por vários minutos); esperar um pouco mais
+        # atravessa o soluço em vez de desistir na primeira onda.
         _sessao.mount("https://", HTTPAdapter(max_retries=Retry(
-            total=4, backoff_factor=2.0,
+            total=5, backoff_factor=3.0,
             status_forcelist=(429, 500, 502, 503, 504),
             allowed_methods=frozenset(["GET"]),
             respect_retry_after_header=True,
