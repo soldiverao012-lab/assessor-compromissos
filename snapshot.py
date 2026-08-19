@@ -230,9 +230,54 @@ def carregar():
         return None
 
 
+ARQUIVO_ERRO = Path(__file__).resolve().parent / "state" / "ultimo_erro.txt"
+
+
+def registrar_falha(erro):
+    """
+    Deixa o motivo da falha VISÍVEL, em vez de morrer calado.
+
+    O robô roda sozinho na nuvem, e o log do GitHub só é legível com login.
+    Quando a fotografia quebra, o bot continua respondendo com dado velho e
+    ninguém percebe — foi exatamente o que aconteceu. Então o erro vai para
+    dois lugares: um arquivo que o workflow commita (dá pra ler de qualquer
+    lugar, e fica o histórico) e um aviso no Telegram.
+    """
+    import traceback
+    texto = traceback.format_exc()
+    quando = datetime.now(app.TZ).strftime("%d/%m %H:%M")
+
+    try:
+        ARQUIVO_ERRO.parent.mkdir(parents=True, exist_ok=True)
+        ARQUIVO_ERRO.write_text(f"{quando}\n\n{texto}\n", encoding="utf-8")
+    except Exception as e:
+        print("nao consegui gravar o arquivo de erro:", e)
+
+    try:
+        resumo = str(erro)[:250] or type(erro).__name__
+        app.enviar(f"⚠️ *A fotografia do financeiro falhou* ({quando})\n\n"
+                   f"`{resumo}`\n\n"
+                   "_As respostas sobre contas continuam vindo do dado anterior "
+                   "até isso ser resolvido._")
+    except Exception as e:
+        print("nao consegui avisar no Telegram:", e)
+
+
 def main():
-    dados = coletar()
+    try:
+        dados = coletar()
+    except Exception as e:
+        print("❌ falhou ao coletar:", e)
+        registrar_falha(e)
+        raise SystemExit(1)
+
     caminho = salvar(dados)
+    # Deu certo: apaga o erro antigo, senão fica parecendo que ainda está quebrado.
+    if ARQUIVO_ERRO.exists():
+        try:
+            ARQUIVO_ERRO.unlink()
+        except OSError:
+            pass
 
     atrasados = [a for a in dados["abertos"] if a["situacao"] == "atrasado"]
     hoje = [a for a in dados["abertos"] if a["situacao"] == "hoje"]
