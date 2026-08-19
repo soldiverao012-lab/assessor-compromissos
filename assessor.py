@@ -522,6 +522,7 @@ AJUDA = (
     "/atrasados — contas vencidas\n"
     "/financeiro — resumo das contas\n"
     "/vendas — vendas de hoje\n"
+    "/naoentendi — o que eu ainda não sei responder\n"
     "/ajuda — esta mensagem"
 )
 
@@ -585,6 +586,13 @@ def tratar_mensagem(svc, texto):
         cmd_lista(svc, 1, "Hoje")
     elif baixa in ("/semana", "semana"):
         cmd_lista(svc, 7, "Próximos 7 dias")
+    elif baixa.startswith("/naoentendi") or baixa.startswith("/não entendi"):
+        import naoentendi
+        if "limpar" in baixa:
+            n = naoentendi.limpar(svc)
+            enviar(f"🧹 Caderninho zerado — {n} registro(s) apagado(s).")
+        else:
+            enviar(naoentendi.texto(svc))
     else:
         resposta = responder_pergunta(svc, texto)
         if resposta:
@@ -592,8 +600,19 @@ def tratar_mensagem(svc, texto):
             return
         dados = entender(texto)
         if not dados:
-            enviar("🤔 Não consegui entender a data. Tenta assim: "
-                   "_reunião amanhã às 15h_")
+            # Não virou compromisso nem casou com pergunta conhecida: anota.
+            # É essa lista que decide, com dado, o que vale a pena ensinar
+            # depois — em vez de pagar uma API pra adivinhar toda vez.
+            try:
+                import naoentendi
+                naoentendi.registrar(svc, texto)
+            except Exception as e:
+                print("nao consegui anotar a frase:", e)  # nunca trava a resposta
+            enviar("🤔 Não entendi essa.\n\n"
+                   "Pra *marcar* algo: _reunião amanhã às 15h_\n"
+                   "Pra *perguntar*: _quais contas estão atrasadas?_ · "
+                   "_quanto vendeu hoje?_\n\n"
+                   "_(anotei sua frase — vou aprender ela depois 📝)_")
             return
         dt = criar_evento(svc, dados["titulo"], dados["inicio"],
                           dados.get("duracao_min", 60), dados.get("rrule"))

@@ -70,6 +70,26 @@ Quem paga esses 38 segundos é o robô da nuvem: de hora em hora o workflow
 e responde em ~1 segundo. Para conta a pagar, um dado de até uma hora atrás não
 muda decisão nenhuma — e toda resposta diz de quando é (`dados de há 20 min`).
 
+### 📝 O caderninho (`/naoentendi`)
+
+Quando você pergunta algo fora dos padrões, o bot responde que não entendeu **e
+anota a frase**. `/naoentendi` mostra a lista, com quantas vezes cada uma foi
+tentada; `/naoentendi limpar` zera.
+
+Para que serve: decidir **com dado** o que vale ensinar. Você manda a lista numa
+sessão do Claude Code (já incluída no plano) e as frases recorrentes viram
+padrões novos em [`consultas.py`](consultas.py) — grátis e instantâneas para
+sempre, em vez de pagar uma API por pergunta. A contagem diz o que vem primeiro.
+
+**Onde isso fica guardado, e por quê:** o webhook roda no Vercel, que não tem
+disco — é a única parte que enxerga suas mensagens e não pode gravar arquivo nem
+commitar. Mas o Calendar já está autenticado ali, e o projeto já usa
+`extendedProperties` de eventos como memória. Então cada frase vira um evento de
+dia inteiro em **01/01/2000**: como tudo que lê a agenda pergunta de *agora* pra
+frente, esses registros são invisíveis pra você e inertes pro resto do sistema.
+[`testar_naoentendi.py`](testar_naoentendi.py) confirma que eles não vazam pro
+`/hoje`, `/semana`, briefing, radar nem para os lembretes.
+
 > 🛟 **Frase com hora continua virando compromisso.** _"reunião sobre contas
 > atrasadas amanhã 10h"_ tem a palavra "atrasadas", mas quem pergunta não marca
 > hora — então ela vira evento, não consulta. Esse limite é testado em
