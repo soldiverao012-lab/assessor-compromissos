@@ -120,6 +120,45 @@ def bloco_radar(svc, agora):
 
 # ── 💰 Financeiro (Granatum) ─────────────────────────────────────────────────
 GRANATUM_BASE = "https://api.granatum.com.br/v1"
+
+# O Granatum permite 100 requisições/min (e 200 a cada 5 min). Como o corte
+# adaptativo faz ~80 chamadas por fotografia, sem controle de ritmo elas saíam
+# a ~170/min — acima do teto. Funcionava enquanto a API estava tolerante e
+# quebrava quando havia concorrência (uma execução local junto com a da nuvem).
+# 0.75s entre chamadas mantém ~80/min, com folga.
+INTERVALO_MINIMO = 0.75
+_ultima_chamada = [0.0]
+
+# Sessão com retentativa: um 429 ou um 5xx passageiro não pode derrubar a
+# fotografia inteira. Antes, um único tropeço matava o job (exit 1) e o
+# briefing ficava com dado velho sem ninguém saber por quê.
+_sessao = None
+
+
+def _granatum_sessao():
+    global _sessao
+    if _sessao is None:
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.retry import Retry
+        _sessao = requests.Session()
+        _sessao.mount("https://", HTTPAdapter(max_retries=Retry(
+            total=4, backoff_factor=2.0,
+            status_forcelist=(429, 500, 502, 503, 504),
+            allowed_methods=frozenset(["GET"]),
+            respect_retry_after_header=True,
+        )))
+    return _sessao
+
+
+def _granatum_get(caminho, params):
+    """GET no Granatum, respeitando o ritmo e com retentativa."""
+    espera = INTERVALO_MINIMO - (time.monotonic() - _ultima_chamada[0])
+    if espera > 0:
+        time.sleep(espera)
+    r = _granatum_sessao().get(f"{GRANATUM_BASE}/{caminho}", params=params, timeout=60)
+    _ultima_chamada[0] = time.monotonic()
+    r.raise_for_status()
+    return r.json()
 # Quantos dias pra trás procurar atrasado. Conta esquecida fica meses em aberto.
 DIAS_ATRASO = 180
 # Quantos atrasados listar antes de resumir o resto.
@@ -135,9 +174,8 @@ def _granatum_contas(token):
     nunca apareciam — sem erro, sem aviso, só sumiam. Conta nova criada no
     Granatum passa a ser vista sozinha, sem mexer em configuração.
     """
-    r = requests.get(f"{GRANATUM_BASE}/contas", params={"access_token": token}, timeout=30)
-    r.raise_for_status()
-    return [str(c["id"]) for c in (r.json() or []) if c.get("ativo", True)]
+    contas = _granatum_get("contas", {"access_token": token}) or []
+    return [str(c["id"]) for c in contas if c.get("ativo", True)]
 
 
 # A API devolve no máximo 50 lançamentos por consulta — e são os 50 mais
@@ -168,14 +206,10 @@ def _granatum_periodo(token, conta_id, inicio, fim, orcamento, profundidade=0):
         return []
     orcamento[0] -= 1
 
-    r = requests.get(
-        f"{GRANATUM_BASE}/lancamentos",
-        params={"access_token": token, "conta_id": conta_id,
-                "data_inicio": inicio.isoformat(), "data_fim": fim.isoformat()},
-        timeout=30,
-    )
-    r.raise_for_status()
-    dados = r.json() or []
+    dados = _granatum_get("lancamentos", {
+        "access_token": token, "conta_id": conta_id,
+        "data_inicio": inicio.isoformat(), "data_fim": fim.isoformat(),
+    }) or []
 
     # Veio abaixo do teto: com certeza é tudo o que existe nesse intervalo.
     if len(dados) < TETO_RESPOSTA:
@@ -184,7 +218,6 @@ def _granatum_periodo(token, conta_id, inicio, fim, orcamento, profundidade=0):
     if inicio >= fim or profundidade >= MAX_CORTES:
         return dados
 
-    time.sleep(0.3)  # gentileza com o rate limit
     meio = inicio + (fim - inicio) / 2
     esquerda = _granatum_periodo(token, conta_id, inicio, meio, orcamento, profundidade + 1)
     direita = _granatum_periodo(token, conta_id, meio + timedelta(days=1), fim,

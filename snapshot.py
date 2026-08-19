@@ -55,12 +55,14 @@ def coletar(agora=None):
 
     # Nome E SALDO de cada conta. O saldo vem de graça nessa mesma resposta —
     # é o que responde "qual o saldo da conta X" sem consulta nenhuma a mais.
-    import requests
     contas_lista = []
-    r = requests.get(f"{briefing.GRANATUM_BASE}/contas",
-                     params={"access_token": token}, timeout=30)
-    if r.ok:
-        for c in (r.json() or []):
+    try:
+        resposta = briefing._granatum_get("contas", {"access_token": token}) or []
+    except Exception as e:
+        print(f"   [aviso] não consegui listar as contas: {e}")
+        resposta = []
+    if resposta:
+        for c in resposta:
             # .strip(): há conta cadastrada com espaço sobrando no fim
             # ("Cartão Empresarial "), o que quebra comparação por nome.
             nome = (c.get("descricao") or "?").strip()
