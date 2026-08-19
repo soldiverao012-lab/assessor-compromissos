@@ -31,6 +31,11 @@ def _dinheiro(valor):
     return f"R$ {abs(valor):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+def _dinheiro_com_sinal(valor):
+    """Para SALDO, onde o sinal é a informação principal."""
+    return ("-" if valor < 0 else "") + _dinheiro(valor)
+
+
 def _limpar(texto, tamanho=38):
     """Tira o que quebra o Markdown do Telegram (um '*' solto recusa a mensagem)."""
     limpo = "".join(c for c in str(texto or "") if c not in "*_`[]")
@@ -151,6 +156,78 @@ def _linhas(itens, limite, mostrar_dias=False):
     return saida
 
 
+# ── 🏦 Reconhecer a conta citada na frase ────────────────────────────────────
+# Palavras que aparecem em nome de conta mas não distinguem uma da outra.
+GENERICAS = {"conta", "contas", "de", "do", "da", "di", "das", "dos", "e"}
+
+
+def _tokens(nome):
+    """Palavras significativas de um nome de conta, sem acento nem pontuação."""
+    limpo = _sem_acento(nome)
+    limpo = "".join(c if c.isalnum() else " " for c in limpo)
+    return [t for t in limpo.split() if len(t) >= 3 and t not in GENERICAS]
+
+
+def identificar_conta(texto, dados):
+    """
+    Qual conta a frase cita? None = nenhuma (a resposta vale para todas).
+
+    "saldo conta sol di verao" tem que responder SÓ da Sol di Verão — antes
+    ele devolvia o consolidado e ignorava o nome, o que é pior que não
+    entender: parece que respondeu.
+
+    A comparação é por palavra significativa, não pelo nome exato, porque
+    ninguém digita "M.O FRANCISCO" nem "CAIXA CAP FEL" como está cadastrado.
+    Empate vai para quem casou mais palavras ("cap fel" ganha de "caixa").
+    """
+    contas = (dados or {}).get("contas") or []
+    if not contas:
+        return None
+    frase = _sem_acento(texto)
+
+    melhor, pontos_melhor = None, 0
+    for c in contas:
+        toks = _tokens(c.get("nome", ""))
+        if not toks:
+            continue
+        pontos = sum(1 for t in toks if t in frase)
+        if pontos > pontos_melhor:
+            melhor, pontos_melhor = c, pontos
+    return melhor
+
+
+def _so_da_conta(abertos, conta):
+    if not conta:
+        return abertos
+    return [a for a in abertos if a.get("conta") == conta["nome"]]
+
+
+def _texto_saldo_conta(conta, abertos):
+    """Saldo da conta + o que ela tem em aberto."""
+    meus = _so_da_conta(abertos, conta)
+    atrasados = [a for a in meus if a["situacao"] == "atrasado"]
+    hoje = [a for a in meus if a["situacao"] == "hoje"]
+    futuros = [a for a in meus if a["situacao"] == "futuro"]
+
+    saldo = conta.get("saldo", 0.0)
+    icone = "🟢" if saldo >= 0 else "🔴"
+    linhas = [f"🏦 *{_limpar(conta['nome'], 30)}*",
+              f"  {icone} saldo: *{_dinheiro_com_sinal(saldo)}*"]
+
+    def bloco(rotulo, itens, emoji):
+        if not itens:
+            return
+        sai = sum(-a["valor"] for a in itens if a["valor"] < 0)
+        linhas.append(f"  {emoji} {rotulo}: *{len(itens)}* — {_dinheiro(sai)}")
+
+    bloco("atrasado", atrasados, "⚠️")
+    bloco("vence hoje", hoje, "📅")
+    bloco("a vencer", futuros, "🔜")
+    if not (atrasados or hoje or futuros):
+        linhas.append("  ✅ nada em aberto nesta conta")
+    return "\n".join(linhas)
+
+
 # ── 🛒 Vendas ────────────────────────────────────────────────────────────────
 PERIODOS = {
     "vendas_hoje":   ("hoje",   "hoje"),
@@ -245,7 +322,7 @@ def _rodape(dados):
     return f"\n\n_dados de {_idade(dados)}_" if dados else ""
 
 
-def responder(intencao, limite=12, svc=None):
+def responder(intencao, limite=12, svc=None, texto=""):
     """Monta o texto da resposta. Devolve None se não houver fotografia ainda."""
     if intencao in JANELAS:
         if svc is None:
@@ -263,9 +340,21 @@ def responder(intencao, limite=12, svc=None):
                 "tenta de novo daqui a pouco.")
 
     abertos = dados.get("abertos", [])
+
+    # A frase citou uma conta? Então tudo daqui pra baixo é só dela.
+    conta = identificar_conta(texto, dados)
+    filtro = ""
+    if conta:
+        # "saldo da conta X" pede o saldo, não a lista — é outra resposta.
+        if intencao == "resumo" or "saldo" in _sem_acento(texto):
+            return _texto_saldo_conta(conta, abertos) + f"\n\n_dados de {_idade(dados)}_"
+        abertos = _so_da_conta(abertos, conta)
+        # Aviso obrigatório: sem ele, "Nada atrasado. Tudo em dia!" filtrado por
+        # uma conta parece dizer que TUDO está em dia — e não está.
+        filtro = f"\n_(só da conta {_limpar(conta['nome'], 24)})_"
     atrasados = [a for a in abertos if a["situacao"] == "atrasado"]
     hoje = [a for a in abertos if a["situacao"] == "hoje"]
-    rodape = f"\n\n_dados de {_idade(dados)}_"
+    rodape = filtro + f"\n\n_dados de {_idade(dados)}_"
 
     if intencao == "atrasados":
         if not atrasados:
@@ -371,7 +460,7 @@ def responder(intencao, limite=12, svc=None):
 def tratar(texto, svc=None):
     """Atalho: identifica e responde. None = não era pergunta que eu saiba tratar."""
     intencao = identificar(texto)
-    return responder(intencao, svc=svc) if intencao else None
+    return responder(intencao, svc=svc, texto=texto) if intencao else None
 
 
 if __name__ == "__main__":
@@ -387,6 +476,7 @@ if __name__ == "__main__":
         intencao = identificar(f)
         print(f"\n=== {f!r} -> {intencao or 'NAO E PERGUNTA (vira compromisso)'}")
         if intencao and intencao not in JANELAS:
-            print(responder(intencao, limite=4))
+            # texto=f é essencial: é dele que sai a conta citada na frase.
+            print(responder(intencao, limite=4, texto=f))
         elif intencao:
             print("   (precisa da agenda — testado pelo bot)")

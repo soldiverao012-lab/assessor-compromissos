@@ -53,12 +53,23 @@ def coletar(agora=None):
     for cid in briefing._granatum_contas(token):
         lancamentos.extend(briefing._granatum_lancamentos(token, cid, inicio, fim, orcamento))
 
-    # Nome de cada conta, pra foto ficar legível sem consultar de novo.
+    # Nome E SALDO de cada conta. O saldo vem de graça nessa mesma resposta —
+    # é o que responde "qual o saldo da conta X" sem consulta nenhuma a mais.
     import requests
+    contas_lista = []
     r = requests.get(f"{briefing.GRANATUM_BASE}/contas",
                      params={"access_token": token}, timeout=30)
     if r.ok:
-        contas = {str(c["id"]): c.get("descricao", "?") for c in (r.json() or [])}
+        for c in (r.json() or []):
+            # .strip(): há conta cadastrada com espaço sobrando no fim
+            # ("Cartão Empresarial "), o que quebra comparação por nome.
+            nome = (c.get("descricao") or "?").strip()
+            contas[str(c["id"])] = nome
+            try:
+                saldo = float(c.get("saldo") or 0)
+            except (TypeError, ValueError):
+                saldo = 0.0
+            contas_lista.append({"id": str(c["id"]), "nome": nome, "saldo": round(saldo, 2)})
 
     abertos = []
     for l in lancamentos:
@@ -86,6 +97,7 @@ def coletar(agora=None):
         "atualizado_em": agora.isoformat(),
         "referencia": hoje.isoformat(),
         "abertos": abertos,
+        "contas": contas_lista,
         "movimento": resumir_movimento(lancamentos, hoje, inicio),
         "vendas": coletar_vendas(agora),
     }

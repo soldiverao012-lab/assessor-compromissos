@@ -123,6 +123,25 @@ INTENCOES = [
     ("quanto sobrou no trimestre", "caixa_trimestre"),
     ("quanto vendeu ontem",        "vendas_ontem"),
     ("vendas da semana",           "vendas_semana"),
+    ("saldo conta sol di verao",   "resumo"),
+]
+
+# Frases que citam uma CONTA: a resposta tem que valer so pra ela.
+# Sem isto, o bot devolvia o consolidado ignorando o nome — pior que nao
+# entender, porque parece que respondeu certo.
+CONTAS = [
+    ("saldo conta sol di verao",              "SOL DI VERAO"),
+    ("saldo da sol di verao",                 "SOL DI VERAO"),
+    ("atrasados da sol di verao",             "SOL DI VERAO"),
+    ("saldo m.o francisco",                   "M.O FRANCISCO"),
+    ("quanto devo na conta do francisco",     "M.O FRANCISCO"),
+    ("saldo do cartao",                       "Cartão Empresarial"),
+    ("saldo cartao empresarial",              "Cartão Empresarial"),
+    ("saldo cap fel",                         "CAIXA CAP FEL"),
+    # Sem conta citada: tem que valer pra TODAS (None).
+    ("saldo contas",                          None),
+    ("quais contas estao atrasadas",          None),
+    ("o que vence hoje",                      None),
 ]
 
 
@@ -151,7 +170,25 @@ def main():
         print(f"  {'[ OK ]' if ok else '[FALHA]'} {frase:<{larg2}} "
               f"-> {obtida}" + ("" if ok else f"   (esperava {esperada})"))
 
-    total = len(CASOS) + len(INTENCOES)
+    print("\n== Conta citada na frase ==")
+    import snapshot
+    dados = snapshot.carregar()
+    if not dados or not dados.get("contas"):
+        print("  (sem fotografia com contas — rode snapshot.py antes)")
+        contas_testadas = 0
+    else:
+        contas_testadas = len(CONTAS)
+        larg3 = max(len(f) for f, _ in CONTAS) + 2
+        for frase, esperada in CONTAS:
+            achada = consultas.identificar_conta(frase, dados)
+            nome = achada["nome"] if achada else None
+            ok = nome == esperada
+            if not ok:
+                erros += 1
+            print(f"  {'[ OK ]' if ok else '[FALHA]'} {frase:<{larg3}} "
+                  f"-> {nome}" + ("" if ok else f"   (esperava {esperada})"))
+
+    total = len(CASOS) + len(INTENCOES) + contas_testadas
     print()
     if erros:
         print(f"=> {erros} caso(s) errado(s) de {total}.")

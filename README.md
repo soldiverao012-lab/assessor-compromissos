@@ -54,6 +54,14 @@ Além de anotar compromissos, o bot responde sobre o financeiro:
 | _o que vence essa semana?_ · _contas a vencer_ | o que ainda vai vencer, do mais próximo |
 | _quanto sobrou esse mês?_ · _resultado do trimestre_ | caixa do período: entrou, saiu, saldo |
 | `/financeiro` | resumo: atrasado, vence hoje, a vencer, caixa do mês |
+| _saldo da conta sol di verão_ | saldo daquela conta + o que ela tem em aberto |
+| _atrasados da sol di verão_ | qualquer pergunta acima, **só daquela conta** |
+
+**Citar uma conta filtra a resposta.** O nome é reconhecido por palavra
+significativa, não exato — _"saldo do cartão"_, _"conta do francisco"_ e
+_"cap fel"_ funcionam. Quando a resposta vem filtrada, ela **diz que está
+filtrada** (`só da conta X`): sem esse aviso, um "nada atrasado" de uma conta
+parece dizer que está tudo em dia no geral.
 | _quanto vendeu hoje?_ · _vendas de ontem_ · `/vendas` | pedidos e faturamento do período, com ticket médio |
 | _vendas da semana_ · _faturamento do mês_ | idem, 7 ou 30 dias |
 | _o que tenho amanhã?_ · _compromissos da semana_ | a agenda, em linguagem falada (o `/hoje` e `/semana` continuam) |
