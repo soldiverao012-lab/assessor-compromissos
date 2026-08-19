@@ -4,6 +4,10 @@
 *.json
 # ...exceto o vercel.json, que é só configuração (não tem segredo).
 !vercel.json
+# ...e a fotografia do financeiro, que o robô atualiza e o bot lê pra
+# responder na hora. Não tem segredo: são valores e descrições de contas,
+# os mesmos que já chegam pra você no briefing.
+!state/financeiro.json
 
 # Anotações locais com segredo dentro (ex: valores pra colar no GitHub).
 *.local.md

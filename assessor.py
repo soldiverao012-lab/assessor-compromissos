@@ -508,9 +508,16 @@ AJUDA = (
     "Eu te lembro *1 dia antes* e *1 hora antes* de cada um. 😉\n\n"
     "No /hoje e /semana, cada compromisso vem com botões pra "
     "*✅ Concluir* ou *🗑️ Apagar* — é só tocar.\n\n"
+    "💰 *Também respondo sobre as contas.* Pergunta assim:\n"
+    "• _quais contas estão atrasadas?_\n"
+    "• _quanto devo_\n"
+    "• _o que vence hoje_\n"
+    "• _maiores contas_\n\n"
     "*Comandos:*\n"
     "/hoje — compromissos de hoje\n"
     "/semana — próximos 7 dias\n"
+    "/atrasados — contas vencidas\n"
+    "/financeiro — resumo das contas\n"
     "/ajuda — esta mensagem"
 )
 
@@ -540,6 +547,32 @@ def tratar_callback(svc, callback):
         responder_callback(cb_id, "😵 Deu um erro aqui.")
 
 
+def pergunta_financeira(texto):
+    """
+    Se a frase for pergunta sobre o financeiro, devolve a resposta pronta.
+
+    Cuidado de convivência: quase toda frase livre que você manda é para CRIAR
+    COMPROMISSO. Uma frase como "reunião sobre contas atrasadas amanhã 10h"
+    contém "atrasadas", mas é claramente um compromisso — quem pergunta não
+    marca hora. Por isso, se a frase traz um HORÁRIO explícito, ela segue como
+    compromisso mesmo casando com o padrão de pergunta.
+    """
+    try:
+        import consultas
+    except ImportError:
+        return None  # módulo opcional: sem ele o bot só perde essa habilidade
+
+    if not consultas.identificar(texto):
+        return None
+    # extrair_hora devolve (hora, minuto, ACHOU, trecho) e cai num padrão de
+    # 9h quando não encontra nada — por isso o que vale é o flag 'achou',
+    # não a hora em si.
+    _, _, achou_hora, _ = extrair_hora(texto)
+    if achou_hora:  # marcou hora -> é compromisso, não pergunta
+        return None
+    return consultas.tratar(texto)
+
+
 def tratar_mensagem(svc, texto):
     baixa = texto.lower().strip()
     if baixa in ("/start", "/ajuda", "/help", "ajuda"):
@@ -549,6 +582,10 @@ def tratar_mensagem(svc, texto):
     elif baixa in ("/semana", "semana"):
         cmd_lista(svc, 7, "Próximos 7 dias")
     else:
+        resposta = pergunta_financeira(texto)
+        if resposta:
+            enviar(resposta)
+            return
         dados = entender(texto)
         if not dados:
             enviar("🤔 Não consegui entender a data. Tenta assim: "

@@ -1,0 +1,350 @@
+{
+ "atualizado_em": "2026-08-19T12:29:53.643141-03:00",
+ "referencia": "2026-08-19",
+ "abertos": [
+  {
+   "data": "2026-02-26",
+   "valor": -81.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 174
+  },
+  {
+   "data": "2026-02-26",
+   "valor": -76.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 174
+  },
+  {
+   "data": "2026-02-28",
+   "valor": -217.69,
+   "descricao": "PARCELAMENTO 1",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 172
+  },
+  {
+   "data": "2026-03-02",
+   "valor": -227.94,
+   "descricao": "frete defato",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 170
+  },
+  {
+   "data": "2026-03-02",
+   "valor": -196.56,
+   "descricao": "frete defato",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 170
+  },
+  {
+   "data": "2026-03-24",
+   "valor": -1836.13,
+   "descricao": "SIMPLES NACIONAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 148
+  },
+  {
+   "data": "2026-03-24",
+   "valor": -736.96,
+   "descricao": "E SOCIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 148
+  },
+  {
+   "data": "2026-03-24",
+   "valor": -81.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 148
+  },
+  {
+   "data": "2026-03-24",
+   "valor": -76.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 148
+  },
+  {
+   "data": "2026-03-30",
+   "valor": -217.69,
+   "descricao": "PARCELAMENTO 1",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 142
+  },
+  {
+   "data": "2026-04-20",
+   "valor": -256.17,
+   "descricao": "ADVANCE TEXTIL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 121
+  },
+  {
+   "data": "2026-04-20",
+   "valor": -81.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 121
+  },
+  {
+   "data": "2026-04-20",
+   "valor": -76.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 121
+  },
+  {
+   "data": "2026-04-30",
+   "valor": -124.23,
+   "descricao": "frete defato",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 111
+  },
+  {
+   "data": "2026-05-11",
+   "valor": -165.84,
+   "descricao": "\tPAGTO ELETRON COBRANCA BRADESCO AUTO/RE CIA DE SEGUROS",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 100
+  },
+  {
+   "data": "2026-05-14",
+   "valor": -57.0,
+   "descricao": "10 Lampadas elgin",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 97
+  },
+  {
+   "data": "2026-05-27",
+   "valor": -81.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 84
+  },
+  {
+   "data": "2026-05-27",
+   "valor": -76.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 84
+  },
+  {
+   "data": "2026-06-29",
+   "valor": -764.0,
+   "descricao": "CHEQUE RUBÃO",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 51
+  },
+  {
+   "data": "2026-06-29",
+   "valor": -81.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 51
+  },
+  {
+   "data": "2026-06-29",
+   "valor": -76.9,
+   "descricao": "SIMPLES/MEI",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 51
+  },
+  {
+   "data": "2026-07-25",
+   "valor": -98.15,
+   "descricao": "LINHAS E ARMARINHOS",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 25
+  },
+  {
+   "data": "2026-07-25",
+   "valor": -52.4,
+   "descricao": "serasa",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 25
+  },
+  {
+   "data": "2026-07-25",
+   "valor": -9.9,
+   "descricao": "meli mais",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 25
+  },
+  {
+   "data": "2026-07-27",
+   "valor": -99.75,
+   "descricao": "SHOPIFY* 523721504",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 23
+  },
+  {
+   "data": "2026-07-27",
+   "valor": -99.75,
+   "descricao": "SHOPIFY* 523721504",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 23
+  },
+  {
+   "data": "2026-07-27",
+   "valor": -75.0,
+   "descricao": "elasticos",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 23
+  },
+  {
+   "data": "2026-07-31",
+   "valor": -217.69,
+   "descricao": "PARCELAMENTO 1",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 19
+  },
+  {
+   "data": "2026-08-01",
+   "valor": -161.1,
+   "descricao": "AGUA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 18
+  },
+  {
+   "data": "2026-08-01",
+   "valor": -99.75,
+   "descricao": "SHOPIFY* 523721504",
+   "conta": "Cartão Empresarial ",
+   "situacao": "atrasado",
+   "dias": 18
+  },
+  {
+   "data": "2026-08-14",
+   "valor": -165.84,
+   "descricao": "TARIFA CESTA EMPRESARIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 5
+  },
+  {
+   "data": "2026-08-18",
+   "valor": -304.4,
+   "descricao": "MENSALIDADE CONSYSA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "atrasado",
+   "dias": 1
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -2051.0,
+   "descricao": "FERIAS ROMILDA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -1913.0,
+   "descricao": "ALUGUEL MATHEUS",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -400.0,
+   "descricao": "BAIXA MEI MARILSA",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -330.0,
+   "descricao": "CONTABILIDADE CAP FELIPE",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -325.79,
+   "descricao": "IPTU",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -200.0,
+   "descricao": "CONTABILIDADE FABRICA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -161.1,
+   "descricao": "AGUA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -129.9,
+   "descricao": "INTERNET ",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -125.0,
+   "descricao": "SEGURANÇA DO TRABALHO",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -125.0,
+   "descricao": "SEGURANÇA DO TRABALHO",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-19",
+   "valor": -121.21,
+   "descricao": "INTERNET FABRICA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  }
+ ]
+}

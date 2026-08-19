@@ -1,0 +1,61 @@
+name: Fotografia do Financeiro
+
+# Tira uma foto dos lançamentos em aberto do Granatum e grava em
+# state/financeiro.json, para o bot responder na hora.
+#
+# Por que não consultar o Granatum quando você pergunta: a API corta a resposta
+# em 50 itens e obriga a fatiar o período, o que leva ~38 segundos. O webhook
+# roda no Vercel, que mata a função em poucos segundos — o bot ficaria mudo.
+# Aqui na nuvem esses 38 segundos não incomodam ninguém.
+
+on:
+  schedule:
+    - cron: "20 * * * *"    # de hora em hora, aos 20 min
+  workflow_dispatch:
+
+concurrency:
+  group: assessor-fotografia
+  cancel-in-progress: false
+
+permissions:
+  contents: write           # precisa pra commitar a foto de volta no repo
+
+jobs:
+  fotografar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Preparar credencial do Google
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > google_credentials.json
+
+      - name: Tirar a foto
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          GOOGLE_CREDENTIALS_FILE: google_credentials.json
+          GRANATUM_TOKEN:     ${{ secrets.GRANATUM_TOKEN }}
+        run: python snapshot.py
+
+      - name: Guardar (só se mudou)
+        run: |
+          git config user.name  "soldiverao012-lab"
+          git config user.email "287550227+soldiverao012-lab@users.noreply.github.com"
+          git add state/financeiro.json
+          # Sem alteração, não commita: evita encher o histórico de commits
+          # iguais e disparar deploy do Vercel à toa.
+          if git diff --cached --quiet; then
+            echo "nada mudou no financeiro — nenhum commit"
+          else
+            git commit -m "fotografia do financeiro [skip ci]"
+            git push
+          fi

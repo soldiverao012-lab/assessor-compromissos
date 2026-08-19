@@ -42,6 +42,34 @@ Pra ver como ficou **sem enviar nada**:
 
 ---
 
+## 💬 Perguntar sobre as contas no Telegram
+
+Além de anotar compromissos, o bot responde sobre o financeiro:
+
+| Você manda | Ele responde |
+|---|---|
+| _quais contas estão atrasadas?_ · _quanto devo_ · `/atrasados` | lista das vencidas, mais recente primeiro, com há quantos dias |
+| _o que vence hoje_ · _contas de hoje_ | o que vence hoje, maior valor primeiro |
+| _maiores contas_ | as maiores em aberto |
+| `/financeiro` | resumo: atrasado, vence hoje, a vencer |
+
+**Por que não é o Granatum ao vivo:** a API dele corta a resposta em 50 itens e
+obriga a fatiar o período — a consulta leva **~38 segundos**. O webhook roda no
+Vercel, que mata a função em poucos segundos, então o bot ficaria mudo.
+
+Quem paga esses 38 segundos é o robô da nuvem: de hora em hora o workflow
+**Fotografia do Financeiro** roda [`snapshot.py`](snapshot.py) e grava
+`state/financeiro.json` no repositório (só commita se mudou). O bot lê essa foto
+e responde em ~1 segundo. Para conta a pagar, um dado de até uma hora atrás não
+muda decisão nenhuma — e toda resposta diz de quando é (`dados de há 20 min`).
+
+> 🛟 **Frase com hora continua virando compromisso.** _"reunião sobre contas
+> atrasadas amanhã 10h"_ tem a palavra "atrasadas", mas quem pergunta não marca
+> hora — então ela vira evento, não consulta. Esse limite é testado em
+> [`testar_roteamento.py`](testar_roteamento.py); rode-o se mexer nos padrões.
+
+---
+
 ## 🩺 Quando algo parecer parado
 
 ```powershell
