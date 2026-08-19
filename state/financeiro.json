@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-19T12:29:53.643141-03:00",
+ "atualizado_em": "2026-08-19T13:08:17.852453-03:00",
  "referencia": "2026-08-19",
  "abertos": [
   {
@@ -251,14 +251,6 @@
    "dias": 5
   },
   {
-   "data": "2026-08-18",
-   "valor": -304.4,
-   "descricao": "MENSALIDADE CONSYSA",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
    "data": "2026-08-19",
    "valor": -2051.0,
    "descricao": "FERIAS ROMILDA",
@@ -316,14 +308,6 @@
   },
   {
    "data": "2026-08-19",
-   "valor": -129.9,
-   "descricao": "INTERNET ",
-   "conta": "M.O FRANCISCO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-19",
    "valor": -125.0,
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
@@ -335,16 +319,26 @@
    "valor": -125.0,
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -121.21,
-   "descricao": "INTERNET FABRICA",
-   "conta": "M.O FRANCISCO",
    "situacao": "hoje",
    "dias": 0
   }
- ]
+ ],
+ "vendas": {
+  "hoje": {
+   "pedidos": 0,
+   "total": 0.0
+  },
+  "ontem": {
+   "pedidos": 0,
+   "total": 0.0
+  },
+  "semana": {
+   "pedidos": 0,
+   "total": 0.0
+  },
+  "mes": {
+   "pedidos": 0,
+   "total": 0.0
+  }
+ }
 }

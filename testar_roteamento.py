@@ -32,6 +32,24 @@ CASOS = [
     ("estou devendo alguma coisa?",          "pergunta"),
     ("tem conta vencida?",                   "pergunta"),
 
+    # --- vendas (devem virar PERGUNTA) ---
+    ("quanto vendeu hoje?",                  "pergunta"),
+    ("quanto vendi hoje",                    "pergunta"),
+    ("vendas de hoje",                       "pergunta"),
+    ("quanto vendeu ontem",                  "pergunta"),
+    ("vendas de ontem",                      "pergunta"),
+    ("vendas da semana",                     "pergunta"),
+    ("faturamento do mes",                   "pergunta"),
+    ("quantos pedidos",                      "pergunta"),
+    ("/vendas",                              "pergunta"),
+
+    # --- agenda (devem virar PERGUNTA) ---
+    ("o que eu tenho hoje",                  "pergunta"),
+    ("o que tenho amanha",                   "pergunta"),
+    ("agenda de amanha",                     "pergunta"),
+    ("compromissos da semana",               "pergunta"),
+    ("tenho algo marcado amanha",            "pergunta"),
+
     # --- devem continuar virando COMPROMISSO ---
     ("dentista amanha as 10h",                          "compromisso"),
     ("reuniao com fornecedor amanha 15h",               "compromisso"),
@@ -40,6 +58,12 @@ CASOS = [
     ("ligar pro contador sobre o atrasado terca 14h",   "compromisso"),
     ("toda terca academia 7h",                          "compromisso"),
     ("fotos do maio de laco quinta 8h",                 "compromisso"),
+    # Armadilhas: contem palavra de pergunta, mas sao compromisso.
+    ("reuniao de vendas amanha",                        "compromisso"),
+    ("tenho dentista amanha",                           "compromisso"),
+    ("treinamento de vendas na sexta",                  "compromisso"),
+    ("fechar o faturamento com a contadora quarta",     "compromisso"),
+    ("conferir as vendas do mes com o joao sexta 16h",  "compromisso"),
 ]
 
 

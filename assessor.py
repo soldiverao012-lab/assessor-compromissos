@@ -508,16 +508,20 @@ AJUDA = (
     "Eu te lembro *1 dia antes* e *1 hora antes* de cada um. 😉\n\n"
     "No /hoje e /semana, cada compromisso vem com botões pra "
     "*✅ Concluir* ou *🗑️ Apagar* — é só tocar.\n\n"
-    "💰 *Também respondo sobre as contas.* Pergunta assim:\n"
-    "• _quais contas estão atrasadas?_\n"
-    "• _quanto devo_\n"
-    "• _o que vence hoje_\n"
-    "• _maiores contas_\n\n"
+    "🙋 *Também respondo perguntas.* Por exemplo:\n\n"
+    "💰 _quais contas estão atrasadas?_\n"
+    "💰 _quanto devo_ · _o que vence hoje_ · _maiores contas_\n"
+    "🛒 _quanto vendeu hoje?_ · _vendas de ontem_\n"
+    "🛒 _vendas da semana_ · _faturamento do mês_\n"
+    "📅 _o que tenho amanhã?_ · _compromissos da semana_\n\n"
+    "_(frase com hora vira compromisso, não pergunta — então "
+    "\"reunião de vendas amanhã 10h\" continua sendo anotada 😉)_\n\n"
     "*Comandos:*\n"
     "/hoje — compromissos de hoje\n"
     "/semana — próximos 7 dias\n"
     "/atrasados — contas vencidas\n"
     "/financeiro — resumo das contas\n"
+    "/vendas — vendas de hoje\n"
     "/ajuda — esta mensagem"
 )
 
@@ -547,9 +551,9 @@ def tratar_callback(svc, callback):
         responder_callback(cb_id, "😵 Deu um erro aqui.")
 
 
-def pergunta_financeira(texto):
+def responder_pergunta(svc, texto):
     """
-    Se a frase for pergunta sobre o financeiro, devolve a resposta pronta.
+    Se a frase for uma pergunta que eu sei responder, devolve o texto pronto.
 
     Cuidado de convivência: quase toda frase livre que você manda é para CRIAR
     COMPROMISSO. Uma frase como "reunião sobre contas atrasadas amanhã 10h"
@@ -570,7 +574,7 @@ def pergunta_financeira(texto):
     _, _, achou_hora, _ = extrair_hora(texto)
     if achou_hora:  # marcou hora -> é compromisso, não pergunta
         return None
-    return consultas.tratar(texto)
+    return consultas.tratar(texto, svc=svc)
 
 
 def tratar_mensagem(svc, texto):
@@ -582,7 +586,7 @@ def tratar_mensagem(svc, texto):
     elif baixa in ("/semana", "semana"):
         cmd_lista(svc, 7, "Próximos 7 dias")
     else:
-        resposta = pergunta_financeira(texto)
+        resposta = responder_pergunta(svc, texto)
         if resposta:
             enviar(resposta)
             return

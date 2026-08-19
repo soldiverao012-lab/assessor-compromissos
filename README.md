@@ -48,10 +48,17 @@ Além de anotar compromissos, o bot responde sobre o financeiro:
 
 | Você manda | Ele responde |
 |---|---|
-| _quais contas estão atrasadas?_ · _quanto devo_ · `/atrasados` | lista das vencidas, mais recente primeiro, com há quantos dias |
+| _quais contas estão atrasadas?_ · _quanto devo_ · `/atrasados` | as vencidas, mais recente primeiro, com há quantos dias |
 | _o que vence hoje_ · _contas de hoje_ | o que vence hoje, maior valor primeiro |
 | _maiores contas_ | as maiores em aberto |
 | `/financeiro` | resumo: atrasado, vence hoje, a vencer |
+| _quanto vendeu hoje?_ · _vendas de ontem_ · `/vendas` | pedidos e faturamento do período, com ticket médio |
+| _vendas da semana_ · _faturamento do mês_ | idem, 7 ou 30 dias |
+| _o que tenho amanhã?_ · _compromissos da semana_ | a agenda, em linguagem falada (o `/hoje` e `/semana` continuam) |
+
+**Vendas e agenda são ao vivo** — a Shopify responde em ~0,3s e o Calendar
+também, então não precisam de fotografia. Se as chaves da Shopify não estiverem
+no ambiente do bot, as vendas caem para a fotografia (que também as guarda).
 
 **Por que não é o Granatum ao vivo:** a API dele corta a resposta em 50 itens e
 obriga a fatiar o período — a consulta leva **~38 segundos**. O webhook roda no
