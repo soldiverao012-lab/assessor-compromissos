@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-19T14:13:56.904871-03:00",
+ "atualizado_em": "2026-08-19T14:45:14.907697-03:00",
  "referencia": "2026-08-19",
  "abertos": [
   {
@@ -1305,22 +1305,5 @@
    "desde": "2026-05-21"
   }
  },
- "vendas": {
-  "hoje": {
-   "pedidos": 0,
-   "total": 0.0
-  },
-  "ontem": {
-   "pedidos": 0,
-   "total": 0.0
-  },
-  "semana": {
-   "pedidos": 0,
-   "total": 0.0
-  },
-  "mes": {
-   "pedidos": 0,
-   "total": 0.0
-  }
- }
+ "vendas": null
 }
