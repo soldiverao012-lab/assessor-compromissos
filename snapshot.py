@@ -29,6 +29,9 @@ import assessor as app
 
 ARQUIVO = Path(__file__).resolve().parent / "state" / "financeiro.json"
 
+# Quantos dias pra FRENTE a fotografia enxerga (contas a vencer).
+DIAS_FUTURO = 60
+
 
 def coletar(agora=None):
     """Lê o Granatum e devolve os lançamentos em aberto, já organizados."""
@@ -39,12 +42,16 @@ def coletar(agora=None):
 
     hoje = agora.date()
     inicio = hoje - timedelta(days=briefing.DIAS_ATRASO)
+    # A janela vai pra FRENTE também: sem isso a fotografia não enxerga nada com
+    # vencimento futuro, e a pergunta "o que vence essa semana?" não tinha como
+    # ser respondida — a situação "futuro" nunca aparecia.
+    fim = hoje + timedelta(days=DIAS_FUTURO)
     orcamento = [briefing.MAX_CHAMADAS]
 
     contas = {}
     lancamentos = []
     for cid in briefing._granatum_contas(token):
-        lancamentos.extend(briefing._granatum_lancamentos(token, cid, inicio, hoje, orcamento))
+        lancamentos.extend(briefing._granatum_lancamentos(token, cid, inicio, fim, orcamento))
 
     # Nome de cada conta, pra foto ficar legível sem consultar de novo.
     import requests
@@ -79,8 +86,62 @@ def coletar(agora=None):
         "atualizado_em": agora.isoformat(),
         "referencia": hoje.isoformat(),
         "abertos": abertos,
+        "movimento": resumir_movimento(lancamentos, hoje, inicio),
         "vendas": coletar_vendas(agora),
     }
+
+
+def resumir_movimento(lancamentos, hoje, inicio_janela):
+    """
+    Quanto ENTROU e quanto SAIU de fato, por período.
+
+    Aproveita dados que já vieram na mesma consulta: até agora os lançamentos
+    já pagos eram lidos e jogados fora, e são justamente eles que dizem o que
+    de fato aconteceu. Nenhuma chamada a mais na API.
+
+    ⚠️ Isto é CAIXA (dinheiro que entrou menos dinheiro que saiu, pela data de
+    pagamento), não lucro contábil. Não considera competência, estoque nem
+    depreciação — quem faz isso é o DRE no Granatum. Quem consome tem que
+    rotular como "resultado de caixa", nunca como "lucro", senão induz a
+    decisão errada.
+
+    Período que a janela não cobre inteiro é OMITIDO, não estimado. Com janela
+    de 180 dias, "no ano" começaria antes do primeiro lançamento lido e sairia
+    menor que a realidade — um total errado é pior que total nenhum, porque
+    parece certo.
+    """
+    candidatos = {
+        "mes":       hoje.replace(day=1),
+        "trimestre": hoje - timedelta(days=90),
+        "ano":       hoje.replace(month=1, day=1),
+    }
+    periodos = {n: d for n, d in candidatos.items() if d >= inicio_janela}
+    resumo = {nome: {"entrou": 0.0, "saiu": 0.0} for nome in periodos}
+
+    for l in lancamentos:
+        pago = str(l.get("data_pagamento") or "")[:10]
+        if not pago:
+            continue  # ainda não aconteceu: não é movimento
+        try:
+            d = datetime.fromisoformat(pago).date()
+            valor = float(l.get("valor") or 0)
+        except (TypeError, ValueError):
+            continue
+        if d > hoje:
+            continue
+        for nome, desde in periodos.items():
+            if d >= desde:
+                if valor >= 0:
+                    resumo[nome]["entrou"] += valor
+                else:
+                    resumo[nome]["saiu"] += -valor
+
+    for nome, v in resumo.items():
+        v["entrou"] = round(v["entrou"], 2)
+        v["saiu"] = round(v["saiu"], 2)
+        v["saldo"] = round(v["entrou"] - v["saiu"], 2)
+        v["desde"] = periodos[nome].isoformat()
+    return resumo
 
 
 def coletar_vendas(agora):

@@ -51,7 +51,9 @@ Além de anotar compromissos, o bot responde sobre o financeiro:
 | _quais contas estão atrasadas?_ · _quanto devo_ · `/atrasados` | as vencidas, mais recente primeiro, com há quantos dias |
 | _o que vence hoje_ · _contas de hoje_ | o que vence hoje, maior valor primeiro |
 | _maiores contas_ | as maiores em aberto |
-| `/financeiro` | resumo: atrasado, vence hoje, a vencer |
+| _o que vence essa semana?_ · _contas a vencer_ | o que ainda vai vencer, do mais próximo |
+| _quanto sobrou esse mês?_ · _resultado do trimestre_ | caixa do período: entrou, saiu, saldo |
+| `/financeiro` | resumo: atrasado, vence hoje, a vencer, caixa do mês |
 | _quanto vendeu hoje?_ · _vendas de ontem_ · `/vendas` | pedidos e faturamento do período, com ticket médio |
 | _vendas da semana_ · _faturamento do mês_ | idem, 7 ou 30 dias |
 | _o que tenho amanhã?_ · _compromissos da semana_ | a agenda, em linguagem falada (o `/hoje` e `/semana` continuam) |

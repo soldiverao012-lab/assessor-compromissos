@@ -32,6 +32,18 @@ CASOS = [
     ("estou devendo alguma coisa?",          "pergunta"),
     ("tem conta vencida?",                   "pergunta"),
 
+    # --- vindas do caderninho real (/naoentendi) ---
+    ("Quais despesas vao vencer essa semana?", "pergunta"),
+    ("o que vence essa semana",                "pergunta"),
+    ("contas a vencer",                        "pergunta"),
+    ("o que vou pagar esse mes",               "pergunta"),
+    ("quanto sobrou de lucro no trimestre?",   "pergunta"),
+    ("quanto sobrou esse mes",                 "pergunta"),
+    ("qual o resultado do trimestre",          "pergunta"),
+    ("/nao entendi",                           "comando"),
+    ("/naoentendi",                            "comando"),
+    ("/não entendi",                           "comando"),
+
     # --- vendas (devem virar PERGUNTA) ---
     ("quanto vendeu hoje?",                  "pergunta"),
     ("quanto vendi hoje",                    "pergunta"),
@@ -69,9 +81,12 @@ CASOS = [
 
 def rumo(frase):
     """Repete a decisão que o bot toma, sem executar nada."""
+    import re
     baixa = frase.lower().strip()
     if baixa in ("/start", "/ajuda", "/help", "ajuda", "/hoje", "hoje",
                  "/semana", "semana"):
+        return "comando"
+    if re.match(r"^/n[aã]o\s?entendi\b", app._sem_acento_simples(baixa)):
         return "comando"
     try:
         import consultas

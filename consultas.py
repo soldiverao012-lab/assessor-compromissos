@@ -17,7 +17,7 @@ segue o caminho normal de virar evento.
 """
 import re
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import snapshot
 
@@ -47,6 +47,17 @@ PADROES = [
     ("atrasados",     r"\batrasad|\bem atraso\b|\bvencid[oa]s?\b|\bdevendo\b|quanto (eu )?devo"),
     ("vence_hoje",    r"vence (hoje|agora)|\bo que vence\b|(contas?|pagar) (de )?hoje|a pagar hoje"),
     ("maiores",       r"maior(es)? (conta|despesa|divida)|\bmaiores contas?\b"),
+    # "o que vence essa semana / neste mes" — contas ainda por vencer.
+    ("a_vencer_semana", r"(vence|vencer|venc\w+|pagar|despesas?|contas?).{0,20}"
+                        r"(nessa|essa|esta|desta|da|na)\s+semana"),
+    ("a_vencer_mes",    r"(vence|vencer|venc\w+|pagar|despesas?|contas?).{0,20}"
+                        r"(nesse|esse|este|deste|do|no)\s+mes"),
+    ("a_vencer",        r"\ba vencer\b|(o que|quais).{0,20}(vai|vao|vou) vencer"),
+    # "quanto sobrou / resultado / lucro" — movimento de caixa do periodo.
+    ("caixa_trimestre", r"(sobrou|resultado|lucro|saldo|balanco).{0,25}trimestre"
+                        r"|trimestre.{0,25}(sobrou|resultado|lucro)"),
+    ("caixa_mes",       r"(sobrou|resultado|lucro|saldo|balanco).{0,25}(nesse|esse|este|do|no)?\s*mes"
+                        r"|quanto (eu )?(sobrou|lucrei|ganhei)"),
     ("resumo",        r"\bfinanceiro\b|como (esta|estao) as contas"),
 
     # --- vendas (período específico primeiro) ---
@@ -272,6 +283,48 @@ def responder(intencao, limite=12, svc=None):
         ordenados = sorted(hoje, key=lambda x: abs(x["valor"]), reverse=True)
         return "\n".join(cab + _linhas(ordenados, limite)) + rodape
 
+    if intencao in ("a_vencer", "a_vencer_semana", "a_vencer_mes"):
+        futuros = [a for a in abertos if a["situacao"] == "futuro"]
+        dias = {"a_vencer_semana": 7, "a_vencer_mes": 30}.get(intencao, 30)
+        rotulo = {"a_vencer_semana": "nos próximos 7 dias",
+                  "a_vencer_mes": "nos próximos 30 dias"}.get(intencao, "a vencer")
+        limite_data = (datetime.fromisoformat(dados["referencia"]).date()
+                       + timedelta(days=dias)).isoformat()
+        proximos = [a for a in futuros if a["data"] <= limite_data]
+        if not proximos:
+            return f"✅ *Nada vencendo {rotulo}.*" + rodape
+        sai = sum(-a["valor"] for a in proximos if a["valor"] < 0)
+        entra = sum(a["valor"] for a in proximos if a["valor"] > 0)
+        resumo = []
+        if sai:
+            resumo.append(f"a pagar {_dinheiro(sai)}")
+        if entra:
+            resumo.append(f"a receber {_dinheiro(entra)}")
+        cab = [f"🔜 *{len(proximos)} conta(s) {rotulo}* — " + ", ".join(resumo)]
+        # Por data crescente: o que vence primeiro é o que você resolve primeiro.
+        ordenados = sorted(proximos, key=lambda x: (x["data"], -abs(x["valor"])))
+        return "\n".join(cab + _linhas(ordenados, limite)) + rodape
+
+    if intencao in ("caixa_mes", "caixa_trimestre"):
+        chave = "mes" if intencao == "caixa_mes" else "trimestre"
+        mov = (dados.get("movimento") or {}).get(chave)
+        if not mov:
+            return ("🤔 Não tenho esse período fechado.\n"
+                    "_A fotografia só calcula período que ela cobre inteiro — "
+                    "melhor não ter número do que ter número errado._" + rodape)
+        nome = "neste mês" if chave == "mes" else "no trimestre"
+        desde = datetime.fromisoformat(mov["desde"]).strftime("%d/%m")
+        saldo = mov["saldo"]
+        icone = "🟢" if saldo >= 0 else "🔴"
+        return (f"{icone} *Caixa {nome}* (desde {desde})\n"
+                f"  ⬆️ entrou {_dinheiro(mov['entrou'])}\n"
+                f"  ⬇️ saiu {_dinheiro(mov['saiu'])}\n"
+                f"  *{'sobrou' if saldo >= 0 else 'faltou'} {_dinheiro(saldo)}*\n\n"
+                "_É caixa: dinheiro que entrou menos o que saiu, pela data de "
+                "pagamento. Não é lucro contábil — estoque, competência e "
+                "depreciação ficam de fora. Pra lucro de verdade, o DRE no "
+                "Granatum._" + rodape)
+
     if intencao == "maiores":
         if not abertos:
             return "✅ *Nada em aberto.*" + rodape
@@ -293,8 +346,13 @@ def responder(intencao, limite=12, svc=None):
             pior = max(atrasados, key=lambda x: abs(x["valor"]))
             linhas.append(f"\n  Maior atrasada: {_limpar(pior['descricao'])} "
                           f"— {_dinheiro(pior['valor'])}")
-        linhas.append("\n  _Pergunte:_ atrasados · vence hoje · maiores contas "
-                      "· quanto vendeu hoje")
+        mov = (dados.get("movimento") or {}).get("mes")
+        if mov:
+            sinal = "sobrou" if mov["saldo"] >= 0 else "faltou"
+            linhas.append(f"  💵 Caixa do mês: {sinal} {_dinheiro(mov['saldo'])}")
+        linhas.append("\n  _Pergunte:_ atrasados · vence hoje · o que vence essa "
+                      "semana · maiores contas · quanto sobrou esse mês · "
+                      "quanto vendeu hoje")
         return "\n".join(linhas) + rodape
 
     return None

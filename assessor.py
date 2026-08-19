@@ -511,6 +511,7 @@ AJUDA = (
     "🙋 *Também respondo perguntas.* Por exemplo:\n\n"
     "💰 _quais contas estão atrasadas?_\n"
     "💰 _quanto devo_ · _o que vence hoje_ · _maiores contas_\n"
+    "💰 _o que vence essa semana?_ · _quanto sobrou esse mês?_\n"
     "🛒 _quanto vendeu hoje?_ · _vendas de ontem_\n"
     "🛒 _vendas da semana_ · _faturamento do mês_\n"
     "📅 _o que tenho amanhã?_ · _compromissos da semana_\n\n"
@@ -552,6 +553,13 @@ def tratar_callback(svc, callback):
         responder_callback(cb_id, "😵 Deu um erro aqui.")
 
 
+def _sem_acento_simples(texto):
+    """Tira acento, pra comparar comando digitado no celular sem frescura."""
+    import unicodedata
+    n = unicodedata.normalize("NFD", str(texto or ""))
+    return "".join(c for c in n if unicodedata.category(c) != "Mn")
+
+
 def responder_pergunta(svc, texto):
     """
     Se a frase for uma pergunta que eu sei responder, devolve o texto pronto.
@@ -586,7 +594,10 @@ def tratar_mensagem(svc, texto):
         cmd_lista(svc, 1, "Hoje")
     elif baixa in ("/semana", "semana"):
         cmd_lista(svc, 7, "Próximos 7 dias")
-    elif baixa.startswith("/naoentendi") or baixa.startswith("/não entendi"):
+    # Aceita /naoentendi, /não entendi, /nao entendi, /naoEntendi...
+    # Quem digita no celular erra acento e espaço; o comando não pode ser exigente
+    # (a própria lista de "não entendi" pegou "/nao entendi" como incompreendido).
+    elif re.match(r"^/n[aã]o\s?entendi\b", _sem_acento_simples(baixa)):
         import naoentendi
         if "limpar" in baixa:
             n = naoentendi.limpar(svc)
