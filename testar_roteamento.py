@@ -40,6 +40,14 @@ CASOS = [
     ("quanto sobrou de lucro no trimestre?",   "pergunta"),
     ("quanto sobrou esse mes",                 "pergunta"),
     ("qual o resultado do trimestre",          "pergunta"),
+    ("compromissos do dia",                    "pergunta"),
+    ("agenda do dia",                          "pergunta"),
+    ("saldo contas",                           "pergunta"),
+    ("saldo das contas",                       "pergunta"),
+    ("contas a pagar",                         "pergunta"),
+    ("contas para pagar",                      "pergunta"),
+    # ...mas com periodo, o especifico tem que ganhar do guarda-chuva:
+    ("contas a pagar essa semana",             "pergunta"),
     ("/nao entendi",                           "comando"),
     ("/naoentendi",                            "comando"),
     ("/não entendi",                           "comando"),
@@ -99,9 +107,32 @@ def rumo(frase):
     return "compromisso"
 
 
+# Casos em que nao basta "e pergunta": tem que cair na intencao CERTA.
+# Sem isto, uma frase especifica caindo no guarda-chuva passaria batido —
+# "contas a pagar essa semana" viraria o resumo geral e ninguem notaria.
+INTENCOES = [
+    ("contas a pagar",             "resumo"),
+    ("contas a pagar essa semana", "a_vencer_semana"),
+    ("saldo contas",               "resumo"),
+    ("compromissos do dia",        "agenda_hoje"),
+    ("compromissos da semana",     "agenda_semana"),
+    ("o que vence hoje",           "vence_hoje"),
+    ("o que vence essa semana",    "a_vencer_semana"),
+    ("quais estao atrasadas",      "atrasados"),
+    ("quanto sobrou esse mes",     "caixa_mes"),
+    ("quanto sobrou no trimestre", "caixa_trimestre"),
+    ("quanto vendeu ontem",        "vendas_ontem"),
+    ("vendas da semana",           "vendas_semana"),
+]
+
+
 def main():
+    import consultas
+
     largura = max(len(f) for f, _ in CASOS) + 2
     erros = 0
+
+    print("== Rumo: pergunta, compromisso ou comando ==")
     for frase, esperado in CASOS:
         obtido = rumo(frase)
         ok = obtido == esperado
@@ -110,11 +141,22 @@ def main():
         print(f"  {'[ OK ]' if ok else '[FALHA]'} {frase:<{largura}} "
               f"-> {obtido}" + ("" if ok else f"   (esperava {esperado})"))
 
+    print("\n== Intencao exata (o especifico tem que ganhar do generico) ==")
+    larg2 = max(len(f) for f, _ in INTENCOES) + 2
+    for frase, esperada in INTENCOES:
+        obtida = consultas.identificar(frase)
+        ok = obtida == esperada
+        if not ok:
+            erros += 1
+        print(f"  {'[ OK ]' if ok else '[FALHA]'} {frase:<{larg2}} "
+              f"-> {obtida}" + ("" if ok else f"   (esperava {esperada})"))
+
+    total = len(CASOS) + len(INTENCOES)
     print()
     if erros:
-        print(f"=> {erros} caso(s) errado(s) de {len(CASOS)}.")
+        print(f"=> {erros} caso(s) errado(s) de {total}.")
         sys.exit(1)
-    print(f"=> Os {len(CASOS)} casos passaram.")
+    print(f"=> Os {total} casos passaram.")
 
 
 if __name__ == "__main__":

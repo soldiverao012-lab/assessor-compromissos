@@ -45,20 +45,28 @@ def _limpar(texto, tamanho=38):
 PADROES = [
     # --- financeiro ---
     ("atrasados",     r"\batrasad|\bem atraso\b|\bvencid[oa]s?\b|\bdevendo\b|quanto (eu )?devo"),
-    ("vence_hoje",    r"vence (hoje|agora)|\bo que vence\b|(contas?|pagar) (de )?hoje|a pagar hoje"),
-    ("maiores",       r"maior(es)? (conta|despesa|divida)|\bmaiores contas?\b"),
-    # "o que vence essa semana / neste mes" — contas ainda por vencer.
+
+    # Os de PERÍODO vêm antes do "hoje" de propósito: o padrão de hoje contém
+    # "o que vence", que também casa com "o que vence essa semana". Na ordem
+    # errada, perguntar pela semana devolvia as contas de hoje — errado e
+    # silencioso. Foi o teste de intenção exata que pegou isso.
     ("a_vencer_semana", r"(vence|vencer|venc\w+|pagar|despesas?|contas?).{0,20}"
                         r"(nessa|essa|esta|desta|da|na)\s+semana"),
     ("a_vencer_mes",    r"(vence|vencer|venc\w+|pagar|despesas?|contas?).{0,20}"
                         r"(nesse|esse|este|deste|do|no)\s+mes"),
+    ("vence_hoje",    r"vence (hoje|agora)|\bo que vence\b|(contas?|pagar) (de )?hoje|a pagar hoje"),
     ("a_vencer",        r"\ba vencer\b|(o que|quais).{0,20}(vai|vao|vou) vencer"),
+    ("maiores",       r"maior(es)? (conta|despesa|divida)|\bmaiores contas?\b"),
     # "quanto sobrou / resultado / lucro" — movimento de caixa do periodo.
     ("caixa_trimestre", r"(sobrou|resultado|lucro|saldo|balanco).{0,25}trimestre"
                         r"|trimestre.{0,25}(sobrou|resultado|lucro)"),
     ("caixa_mes",       r"(sobrou|resultado|lucro|saldo|balanco).{0,25}(nesse|esse|este|do|no)?\s*mes"
                         r"|quanto (eu )?(sobrou|lucrei|ganhei)"),
-    ("resumo",        r"\bfinanceiro\b|como (esta|estao) as contas"),
+    # Guarda-chuva do financeiro. Vem DEPOIS dos especificos de proposito:
+    # "contas a pagar essa semana" tem que cair no a_vencer_semana, nao aqui.
+    ("resumo",        r"\bfinanceiro\b|como (esta|estao) as contas"
+                      r"|^saldo\b|saldo (d[ae]s )?contas?|contas? (a|para|pra) pagar"
+                      r"|^contas$|resumo (das )?contas"),
 
     # --- vendas (período específico primeiro) ---
     # Os padrões pedem o VERBO de venda ("vendeu", "faturou") ou a palavra
@@ -83,10 +91,12 @@ PADROES = [
     ("agenda_semana", r"(agenda|compromissos?)\s+(d[ae]\s+|pra\s+|para\s+)?semana"
                       r"|o que\s+(eu\s+)?(tenho|tem)\s+.*semana"
                       r"|(tenho|tem)\s+(algo|alguma coisa)\s+.*semana"),
-    ("agenda_hoje",   r"(agenda|compromissos?)\s+(de\s+|pra\s+|para\s+)?hoje"
+    # "do dia" é tão comum quanto "de hoje" — exigir a palavra "hoje" era
+    # exigência à toa (foi assim que "compromissos do dia" caiu no caderninho).
+    ("agenda_hoje",   r"(agenda|compromissos?)\s+(de\s+|pra\s+|para\s+|d[oa]\s+)?(hoje|dia)\b"
                       r"|o que\s+(eu\s+)?(tenho|tem)\s+.*hoje"
                       r"|(tenho|tem)\s+(algo|alguma coisa)\s+.*hoje"
-                      r"|^minha agenda$|^agenda$"),
+                      r"|^minha agenda$|^agenda$|^compromissos$"),
 ]
 
 COMANDOS = {
