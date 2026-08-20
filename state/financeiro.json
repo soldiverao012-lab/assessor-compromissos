@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-20T13:55:55.890040-03:00",
+ "atualizado_em": "2026-08-20T14:50:35.075157-03:00",
  "referencia": "2026-08-20",
  "abertos": [
   {
@@ -252,22 +252,6 @@
   },
   {
    "data": "2026-08-20",
-   "valor": -2700.0,
-   "descricao": "EMPRESTIMO BRADESCO",
-   "conta": "SOL DI VERAO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -2051.0,
-   "descricao": "FERIAS ROMILDA",
-   "conta": "M.O FRANCISCO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-20",
    "valor": -1913.0,
    "descricao": "ALUGUEL MATHEUS",
    "conta": "SOL DI VERAO",
@@ -316,25 +300,9 @@
   },
   {
    "data": "2026-08-20",
-   "valor": -330.0,
-   "descricao": "CONTABILIDADE CAP FELIPE",
-   "conta": "M.O FRANCISCO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-20",
    "valor": -325.79,
    "descricao": "IPTU",
    "conta": "SOL DI VERAO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -200.0,
-   "descricao": "CONTABILIDADE FABRICA",
-   "conta": "M.O FRANCISCO",
    "situacao": "hoje",
    "dias": 0
   },
@@ -391,14 +359,6 @@
    "valor": -76.9,
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
-   "situacao": "hoje",
-   "dias": 0
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -30.0,
-   "descricao": "VALE ROMILDA",
-   "conta": "SOL DI VERAO",
    "situacao": "hoje",
    "dias": 0
   },
@@ -460,6 +420,14 @@
   },
   {
    "data": "2026-09-01",
+   "valor": -2051.0,
+   "descricao": "FERIAS ROMILDA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -12
+  },
+  {
+   "data": "2026-09-01",
    "valor": -161.1,
    "descricao": "AGUA",
    "conta": "M.O FRANCISCO",
@@ -478,6 +446,22 @@
    "data": "2026-09-03",
    "valor": -800.0,
    "descricao": "LUZ LOJA 1",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -14
+  },
+  {
+   "data": "2026-09-03",
+   "valor": -330.0,
+   "descricao": "CONTABILIDADE CAP FELIPE",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -14
+  },
+  {
+   "data": "2026-09-03",
+   "valor": -200.0,
+   "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
    "dias": -14
@@ -708,123 +692,11 @@
   },
   {
    "data": "2026-09-17",
-   "valor": -2000.0,
-   "descricao": "SIMPLES NACIONAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -2000.0,
-   "descricao": "SIMPLES NACIONAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -1701.0,
-   "descricao": "SIMPLES NACIONAL VENC IMENTO MAIO",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
    "valor": -891.53,
    "descricao": "ADVANCE TEXTIL - NF-e 463438 de 06/08/2026 - dupl 001/003 (fatura 921324) - tecido praia/lycra",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
    "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -581.78,
-   "descricao": "E SOCIAL MAIO",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -581.78,
-   "descricao": "E SOCIAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -581.78,
-   "descricao": "E SOCIAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -534.18,
-   "descricao": "FGTS OUTUBRO 2025",
-   "conta": "SOL DI VERAO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -534.18,
-   "descricao": "FGTS NOVEMBRO 25",
-   "conta": "SOL DI VERAO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -534.18,
-   "descricao": "FGTS CAP FEL",
-   "conta": "SOL DI VERAO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -222.18,
-   "descricao": "FGTS DEZEMBRO 25",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-17",
-   "valor": -222.18,
-   "descricao": "FGTS CAP FEL SETEMBRO 25",
-   "conta": "SOL DI VERAO",
-   "situacao": "futuro",
-   "dias": -28
-  },
-  {
-   "data": "2026-09-18",
-   "valor": -1000.0,
-   "descricao": "SIMPLES NACIONAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -29
-  },
-  {
-   "data": "2026-09-18",
-   "valor": -581.78,
-   "descricao": "E SOCIAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -29
-  },
-  {
-   "data": "2026-09-18",
-   "valor": -581.78,
-   "descricao": "E SOCIAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -29
   },
   {
    "data": "2026-09-18",
@@ -852,14 +724,6 @@
   },
   {
    "data": "2026-09-20",
-   "valor": -2000.0,
-   "descricao": "SIMPLES NACIONAL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "futuro",
-   "dias": -31
-  },
-  {
-   "data": "2026-09-20",
    "valor": -1067.0,
    "descricao": "VALE MARILSA ",
    "conta": "SOL DI VERAO",
@@ -878,14 +742,6 @@
    "data": "2026-09-20",
    "valor": -724.0,
    "descricao": "VALE NARA",
-   "conta": "SOL DI VERAO",
-   "situacao": "futuro",
-   "dias": -31
-  },
-  {
-   "data": "2026-09-20",
-   "valor": -534.18,
-   "descricao": "FGTS CAP FEL",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
    "dias": -31
@@ -1011,17 +867,145 @@
    "dias": -38
   },
   {
-   "data": "2026-09-30",
-   "valor": -217.69,
-   "descricao": "PARCELAMENTO 1",
+   "data": "2026-10-01",
+   "valor": -2000.0,
+   "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -2000.0,
+   "descricao": "SIMPLES NACIONAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -2000.0,
+   "descricao": "SIMPLES NACIONAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -1701.0,
+   "descricao": "SIMPLES NACIONAL VENC IMENTO MAIO",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -1000.0,
+   "descricao": "SIMPLES NACIONAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
   },
   {
    "data": "2026-10-01",
    "valor": -891.53,
    "descricao": "ADVANCE TEXTIL - NF-e 463438 de 06/08/2026 - dupl 002/003 (fatura 921324) - tecido praia/lycra",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -581.78,
+   "descricao": "E SOCIAL MAIO",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -581.78,
+   "descricao": "E SOCIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -581.78,
+   "descricao": "E SOCIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -581.78,
+   "descricao": "E SOCIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -581.78,
+   "descricao": "E SOCIAL",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -534.18,
+   "descricao": "FGTS OUTUBRO 2025",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -534.18,
+   "descricao": "FGTS NOVEMBRO 25",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -534.18,
+   "descricao": "FGTS CAP FEL",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -534.18,
+   "descricao": "FGTS CAP FEL",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -222.18,
+   "descricao": "FGTS DEZEMBRO 25",
+   "conta": "M.O FRANCISCO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -222.18,
+   "descricao": "FGTS CAP FEL SETEMBRO 25",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -42
+  },
+  {
+   "data": "2026-10-01",
+   "valor": -217.69,
+   "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
    "dias": -42
@@ -1310,25 +1294,25 @@
   {
    "id": "61913",
    "nome": "M.O FRANCISCO",
-   "saldo": -2529.92
+   "saldo": -1564.16
   },
   {
    "id": "110255",
    "nome": "SOL DI VERAO",
-   "saldo": -6984.15
+   "saldo": -9684.36
   }
  ],
  "movimento": {
   "mes": {
-   "entrou": 10781.08,
-   "saiu": 17033.85,
-   "saldo": -6252.77,
+   "entrou": 12187.72,
+   "saiu": 19734.06,
+   "saldo": -7546.34,
    "desde": "2026-08-01"
   },
   "trimestre": {
-   "entrou": 102850.35,
-   "saiu": 114231.2,
-   "saldo": -11380.85,
+   "entrou": 104256.99,
+   "saiu": 116931.41,
+   "saldo": -12674.42,
    "desde": "2026-05-22"
   }
  },
