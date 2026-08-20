@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-20T16:50:07.417631-03:00",
+ "atualizado_em": "2026-08-20T17:51:13.102795-03:00",
  "referencia": "2026-08-20",
  "abertos": [
   {
@@ -84,14 +84,6 @@
   },
   {
    "data": "2026-04-20",
-   "valor": -256.17,
-   "descricao": "ADVANCE TEXTIL",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 122
-  },
-  {
-   "data": "2026-04-20",
    "valor": -81.9,
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
@@ -105,14 +97,6 @@
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
    "dias": 122
-  },
-  {
-   "data": "2026-04-30",
-   "valor": -124.23,
-   "descricao": "frete defato",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 112
   },
   {
    "data": "2026-05-11",
@@ -268,7 +252,7 @@
   },
   {
    "data": "2026-08-20",
-   "valor": -724.0,
+   "valor": -775.0,
    "descricao": "VALE NARA",
    "conta": "SOL DI VERAO",
    "situacao": "hoje",
@@ -492,7 +476,7 @@
   },
   {
    "data": "2026-09-10",
-   "valor": -5500.0,
+   "valor": -2500.0,
    "descricao": "SALARIO MATHEUS",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
@@ -1052,7 +1036,7 @@
   },
   {
    "data": "2026-10-10",
-   "valor": -5500.0,
+   "valor": -2500.0,
    "descricao": "SALARIO MATHEUS",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
