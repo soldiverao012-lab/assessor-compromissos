@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-20T12:52:58.055943-03:00",
+ "atualizado_em": "2026-08-20T13:55:55.890040-03:00",
  "referencia": "2026-08-20",
  "abertos": [
   {
@@ -251,81 +251,25 @@
    "dias": 6
   },
   {
-   "data": "2026-08-19",
-   "valor": -2051.0,
-   "descricao": "FERIAS ROMILDA",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -1913.0,
-   "descricao": "ALUGUEL MATHEUS",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -400.0,
-   "descricao": "BAIXA MEI MARILSA",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -330.0,
-   "descricao": "CONTABILIDADE CAP FELIPE",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -325.79,
-   "descricao": "IPTU",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -200.0,
-   "descricao": "CONTABILIDADE FABRICA",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -161.1,
-   "descricao": "AGUA",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -125.0,
-   "descricao": "SEGURANÇA DO TRABALHO",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-19",
-   "valor": -125.0,
-   "descricao": "SEGURANÇA DO TRABALHO",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
    "data": "2026-08-20",
    "valor": -2700.0,
    "descricao": "EMPRESTIMO BRADESCO",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -2051.0,
+   "descricao": "FERIAS ROMILDA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -1913.0,
+   "descricao": "ALUGUEL MATHEUS",
    "conta": "SOL DI VERAO",
    "situacao": "hoje",
    "dias": 0
@@ -356,8 +300,40 @@
   },
   {
    "data": "2026-08-20",
+   "valor": -400.0,
+   "descricao": "BAIXA MEI MARILSA",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
    "valor": -330.0,
    "descricao": "CONTABILIDADE CAP FELIPE",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -330.0,
+   "descricao": "CONTABILIDADE CAP FELIPE",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -325.79,
+   "descricao": "IPTU",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -200.0,
+   "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "hoje",
    "dias": 0
@@ -367,6 +343,30 @@
    "valor": -200.0,
    "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -161.1,
+   "descricao": "AGUA",
+   "conta": "M.O FRANCISCO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -125.0,
+   "descricao": "SEGURANÇA DO TRABALHO",
+   "conta": "SOL DI VERAO",
+   "situacao": "hoje",
+   "dias": 0
+  },
+  {
+   "data": "2026-08-20",
+   "valor": -125.0,
+   "descricao": "SEGURANÇA DO TRABALHO",
+   "conta": "SOL DI VERAO",
    "situacao": "hoje",
    "dias": 0
   },
@@ -1310,7 +1310,7 @@
   {
    "id": "61913",
    "nome": "M.O FRANCISCO",
-   "saldo": -2970.8
+   "saldo": -2529.92
   },
   {
    "id": "110255",
