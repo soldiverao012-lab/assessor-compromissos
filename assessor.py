@@ -357,9 +357,19 @@ def extrair_data(texto, agora):
         m = re.search(rf"\b{nome}\b", t)
         if m:
             faltam = (DIAS_SEMANA_NUM[nome] - agora.weekday()) % 7
+            # "sexta que vem" dito NUMA sexta é a próxima, não hoje. Sem isso a
+            # frase virava um compromisso pra daqui a pouco — ou era recusada,
+            # se a hora já tivesse passado.
+            if faltam == 0 and re.search(
+                    rf"(pr[óo]xim[ao]\s+{nome}|{nome}\s+que\s+vem)", t):
+                faltam = 7
             return hoje + timedelta(days=faltam), True, m.group(0)
 
     return None, False, None
+
+
+def _e_dia_da_semana(trecho):
+    return bool(trecho) and trecho.strip().lower() in DIAS_SEMANA_NUM
 
 
 def extrair_hora(texto):
@@ -443,6 +453,10 @@ def entender(texto):
         dt = datetime.combine(dia, dtime(h, mnt))
         if not achou_data and dt <= agora:   # só disse a hora e já passou -> amanhã
             dt += timedelta(days=1)
+        # "sexta 15h" numa sexta 18h: quem fala quer a próxima sexta. Sem isto
+        # a frase caía no filtro de data passada e era recusada.
+        elif achou_data and dt <= agora and _e_dia_da_semana(trecho_d):
+            dt += timedelta(days=7)
 
     if dt < agora - timedelta(minutes=1):    # data no passado = não entendi direito
         return None
@@ -478,8 +492,34 @@ def linha_evento(ev):
 
 
 # ── Comandos ─────────────────────────────────────────────────────────────────
+MAX_PENDENTES_NA_LISTA = 5
+
+
+def mostrar_pendentes(svc):
+    """
+    Põe as tarefas não confirmadas ANTES da agenda do dia.
+
+    Elas vêm primeiro de propósito: o que ficou pra trás é o que você corre o
+    risco de esquecer de vez — o compromisso de hoje o próprio dia cobra.
+    Cada uma vem com os botões, então dá pra resolver a lista aqui mesmo.
+    """
+    try:
+        import pendencias
+    except ImportError:
+        return
+    pend = pendencias.listar(svc)
+    if not pend:
+        return
+    enviar(f"⏳ *Pendentes* ({len(pend)}) — você não confirmou:")
+    for ev in pend[:MAX_PENDENTES_NA_LISTA]:
+        enviar(pendencias.texto_cobranca(ev), botoes=pendencias.botoes(ev))
+    if len(pend) > MAX_PENDENTES_NA_LISTA:
+        enviar(f"_… e mais {len(pend) - MAX_PENDENTES_NA_LISTA} pendente(s)._")
+
+
 def cmd_lista(svc, dias, titulo):
     agora = datetime.now(TZ)
+    mostrar_pendentes(svc)
     evs = eventos_entre(svc, agora, agora + timedelta(days=dias))
     evs = [e for e in evs if e["start"].get("dateTime") or e["start"].get("date")]
     if not evs:
@@ -508,6 +548,11 @@ AJUDA = (
     "Eu te lembro *1 dia antes* e *1 hora antes* de cada um. 😉\n\n"
     "No /hoje e /semana, cada compromisso vem com botões pra "
     "*✅ Concluir* ou *🗑️ Apagar* — é só tocar.\n\n"
+    "🔔 *Eu cobro depois.* Passou a hora, eu pergunto se você fez:\n"
+    "• *✅ Fiz* — apago da agenda, acabou.\n"
+    "• *⏳ Ainda não* — continua aparecendo e eu pergunto de novo.\n"
+    "• *🔕 Parar de cobrar* — fica na agenda, mas eu calo a boca.\n"
+    "_(/pendentes mostra tudo que está em aberto)_\n\n"
     "🙋 *Também respondo perguntas.* Por exemplo:\n\n"
     "💰 _quais contas estão atrasadas?_\n"
     "💰 _quanto devo_ · _o que vence hoje_ · _maiores contas_\n"
@@ -520,6 +565,7 @@ AJUDA = (
     "*Comandos:*\n"
     "/hoje — compromissos de hoje\n"
     "/semana — próximos 7 dias\n"
+    "/pendentes — tarefas que você ainda não confirmou\n"
     "/atrasados — contas vencidas\n"
     "/financeiro — resumo das contas\n"
     "/vendas — vendas de hoje\n"
@@ -529,7 +575,7 @@ AJUDA = (
 
 
 def tratar_callback(svc, callback):
-    """Trata o toque num botão (✅ Concluir / 🗑️ Apagar)."""
+    """Trata o toque num botão (✅ Concluir / 🗑️ Apagar / cobrança de tarefa)."""
     if str((callback.get("from") or {}).get("id")) != str(TG_CHAT):
         return                                   # só você
     cb_id = callback.get("id")
@@ -538,7 +584,18 @@ def tratar_callback(svc, callback):
     message_id = msg.get("message_id")
     acao, _, event_id = (callback.get("data") or "").partition(":")
     try:
-        if acao == "del":
+        # Botões da cobrança (✅ Fiz / ⏳ Ainda não / 🔕 Parar de cobrar).
+        resposta = None
+        try:
+            import pendencias
+            resposta = pendencias.resolver(svc, acao, event_id)
+        except ImportError:
+            pass                                 # módulo opcional
+        if resposta:
+            aviso, novo_texto = resposta
+            responder_callback(cb_id, aviso)
+            editar_mensagem(chat_id, message_id, novo_texto)
+        elif acao == "del":
             titulo = apagar_evento(svc, event_id)
             responder_callback(cb_id, "🗑️ Apagado!")
             editar_mensagem(chat_id, message_id, f"🗑️ _Apagado:_ {titulo}")
@@ -594,6 +651,15 @@ def tratar_mensagem(svc, texto):
         cmd_lista(svc, 1, "Hoje")
     elif baixa in ("/semana", "semana"):
         cmd_lista(svc, 7, "Próximos 7 dias")
+    elif baixa in ("/pendentes", "pendentes", "/pendencias", "/pendências"):
+        try:
+            import pendencias
+            if not pendencias.listar(svc):
+                enviar("🎉 *Nada pendente!* Tudo que passou você já confirmou.")
+            else:
+                mostrar_pendentes(svc)
+        except ImportError:
+            enviar("🤔 A cobrança de tarefas não está instalada aqui.")
     # Aceita /naoentendi, /não entendi, /nao entendi, /naoEntendi...
     # Quem digita no celular erra acento e espaço; o comando não pode ser exigente
     # (a própria lista de "não entendi" pegou "/nao entendi" como incompreendido).
@@ -641,8 +707,19 @@ def resumo_matinal(svc):
     evs = eventos_entre(svc, agora, fim_do_dia)
     evs = [e for e in evs if e["start"].get("dateTime") or e["start"].get("date")]
 
+    # Tarefa não confirmada entra no bom dia: é o lugar onde ela reaparece
+    # todo dia até você resolver. Nunca derruba o resumo se falhar.
+    atrasadas = []
+    try:
+        import pendencias
+        atrasadas = pendencias.linhas(svc)
+    except Exception as e:
+        print("   ⚠️ não consegui listar pendentes:", e)
+    rabicho = ("\n\n" + "\n".join(atrasadas) + "\n\n_(mande /hoje pra confirmar)_") \
+        if atrasadas else ""
+
     if not evs:
-        enviar("☀️ *Bom dia!* Hoje sua agenda está livre. Aproveita! 🌴")
+        enviar("☀️ *Bom dia!* Hoje sua agenda está livre. Aproveita! 🌴" + rabicho)
         return
 
     linhas = []
@@ -654,7 +731,7 @@ def resumo_matinal(svc):
     n = len(evs)
     plural = "compromisso" if n == 1 else "compromissos"
     enviar(f"☀️ *Bom dia!* Hoje você tem {n} {plural}:\n"
-           + "\n".join(linhas) + "\n\nBora que o dia rende! 💪")
+           + "\n".join(linhas) + rabicho + "\n\nBora que o dia rende! 💪")
 
 
 # ── Lembretes ────────────────────────────────────────────────────────────────
@@ -683,6 +760,25 @@ def enviar_lembretes(svc):
             marcar_lembrete_enviado(svc, ev, rotulo)
 
 
+def cobrar_pendentes(svc):
+    """
+    Pergunta se as tarefas que já passaram foram feitas.
+
+    Roda no mesmo ciclo dos lembretes (o vigia), e como o módulo é opcional e
+    a cobrança é secundária, um erro aqui nunca pode derrubar os lembretes —
+    que são a função principal do assessor.
+    """
+    try:
+        import pendencias
+        n = pendencias.cobrar(svc)
+        if n:
+            print(f"   ❓ {n} cobrança(s) enviada(s)")
+    except ImportError:
+        pass
+    except Exception as e:
+        print("   ⚠️ erro ao cobrar pendentes:", e)
+
+
 # ── Principal ────────────────────────────────────────────────────────────────
 def main():
     print("🤖 Assessor rodando...", datetime.now(TZ).strftime("%d/%m %H:%M"))
@@ -700,6 +796,7 @@ def main():
     if "--lembretes" in sys.argv:
         print("   ⏰ enviando lembretes")
         enviar_lembretes(svc)
+        cobrar_pendentes(svc)
         print("   ✅ lembretes enviados")
         return
 
@@ -724,6 +821,7 @@ def main():
             rodada += 1
             try:
                 enviar_lembretes(svc)
+                cobrar_pendentes(svc)
             except Exception as e:
                 # Uma falha de rede não pode derrubar o vigia — ele tenta de novo.
                 print(f"   ⚠️ rodada {rodada} falhou: {e}")
@@ -743,6 +841,7 @@ def main():
             enviar("😵 Deu um erro aqui ao processar. Tenta de novo?")
 
     enviar_lembretes(svc)
+    cobrar_pendentes(svc)
     print("   ✅ rodada concluída")
 
 

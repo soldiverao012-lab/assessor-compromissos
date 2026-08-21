@@ -4,12 +4,59 @@ Seu assistente pessoal que:
 
 1. **Anota** — você manda uma frase no Telegram (_"reunião com fornecedor amanhã 15h"_) e ele cria o evento no seu Google Calendar.
 2. **Lembra** — fica vigiando a agenda e te avisa **1 dia antes** e **1 hora antes** de cada compromisso.
-3. **Briefing do dia** — toda manhã às **7h** chega um recado só com **agenda + financeiro + vendas + e-mails**. ☀️ (veja abaixo)
-4. **Roda sozinho na nuvem** (GitHub Actions), de graça, mesmo com o PC desligado — igualzinho ao seu `publicador/`.
+3. **Cobra** — passou a hora, ele pergunta se você fez. Confirmou, some da agenda; ainda não, continua na sua frente. ✅ (veja abaixo)
+4. **Briefing do dia** — toda manhã às **7h** chega um recado só com **agenda + financeiro + vendas + e-mails**. ☀️ (veja abaixo)
+5. **Roda sozinho na nuvem** (GitHub Actions), de graça, mesmo com o PC desligado — igualzinho ao seu `publicador/`.
 
-**Comandos no Telegram:** `/hoje` • `/semana` • `/ajuda`
+**Comandos no Telegram:** `/hoje` • `/semana` • `/pendentes` • `/ajuda`
 
 > 💚 **100% gratuito.** O assessor entende as datas em português por conta própria (offline), sem nenhuma API paga. O briefing também: o Gmail é lido por IMAP com senha de app, não por API paga.
+
+---
+
+## ✅ A cobrança de tarefas (`pendencias.py`)
+
+Marcar não é fazer. Pouco depois de o compromisso terminar, o bot pergunta:
+
+> ❓ **Você fez isso?**
+> **pagar boleto** — era hoje às 09:00
+> [ ✅ Fiz ] [ ⏳ Ainda não ]
+> [ 🔕 Parar de cobrar ]
+
+| Botão | O que acontece |
+|---|---|
+| ✅ **Fiz** | o compromisso é **apagado da agenda**. Acabou. |
+| ⏳ **Ainda não** | **continua aparecendo** — no `/hoje`, no bom dia e no briefing — e é cobrado de novo mais tarde |
+| 🔕 **Parar de cobrar** | fica na agenda, mas o bot cala a boca sobre ele |
+
+`/pendentes` mostra tudo que está em aberto, cada item com seus botões — dá pra
+limpar a lista inteira ali mesmo. Quem é recorrente (_"toda terça academia"_)
+tem cada ocorrência cobrada em separado: o ✅ apaga só aquela, a série continua.
+
+**Onde fica guardado:** no próprio evento do Google Calendar
+(`extendedProperties`), do mesmo jeito que os lembretes. Zero banco de dados.
+
+**As regras de convivência** (todas em constantes no topo de
+[`pendencias.py`](pendencias.py), com o motivo escrito ao lado):
+
+- **Nunca de madrugada** — só cobra entre **8h e 22h**. Alarme noturno faz a
+  pessoa silenciar o bot inteiro, e aí ela perde também os lembretes.
+- **Insiste menos com o tempo** — a espera entre cobranças cresce (4h, 8h, 12h…
+  até 1x por dia). Martelar de 4 em 4 horas uma tarefa velha só ensina a ignorar.
+- **Não desenterra histórico** — só _começa_ a cobrar o que terminou há menos de
+  **72h**. Sem isso, a estreia do recurso despejaria duas semanas de cobrança de
+  uma vez. O que é mais antigo continua listado em `/pendentes`, sem alarme.
+- **Não cobra evento de dia inteiro** — é assim que o caderninho do
+  `/naoentendi` guarda as frases; o bot estaria perguntando ao dono se ele "fez"
+  uma anotação interna do próprio bot.
+- **No máximo 4 mensagens por rodada**, pra nunca virar enxurrada.
+
+Tudo isso é fixado por [`testar_cobranca.py`](testar_cobranca.py), que roda
+offline (não toca no Telegram nem na agenda de verdade):
+
+```powershell
+.venv\Scripts\python testar_cobranca.py
+```
 
 ---
 

@@ -77,6 +77,20 @@ def bloco_agenda(svc, agora):
     return cabeca + "\n" + "\n".join(linhas)
 
 
+# ── ⏳ Pendentes (o que passou e você não confirmou) ─────────────────────────
+def bloco_pendentes(svc, agora):
+    """
+    As tarefas cobradas e ainda não confirmadas.
+
+    Fica logo abaixo da agenda de propósito: o compromisso de hoje o próprio
+    dia cobra; o que ficou pra trás só reaparece se alguém insistir. Some
+    sozinho quando não há nada em aberto — briefing limpo é briefing lido.
+    """
+    import pendencias
+    linhas = pendencias.linhas(svc, agora)
+    return "\n".join(linhas) if linhas else None
+
+
 # ── 🔭 No radar (próximos dias) ──────────────────────────────────────────────
 # Quantos dias à frente o radar enxerga. Uma semana: é o horizonte em que dá pra
 # se preparar pra um evento de mercado, e casa com o comando /semana do bot.
@@ -401,6 +415,7 @@ def bloco_email(agora):
 # ── Montagem ─────────────────────────────────────────────────────────────────
 FONTES = [
     ("agenda",     bloco_agenda,     True),   # True = precisa do serviço do Calendar
+    ("pendentes",  bloco_pendentes,  True),
     ("radar",      bloco_radar,      True),
     ("financeiro", bloco_financeiro, False),
     ("vendas",     bloco_vendas,     False),
