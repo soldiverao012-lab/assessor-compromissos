@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-21T16:02:09.420204-03:00",
+ "atualizado_em": "2026-08-21T16:42:36.319495-03:00",
  "referencia": "2026-08-21",
  "abertos": [
   {
@@ -233,30 +233,6 @@
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
    "dias": 7
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -1913.0,
-   "descricao": "ALUGUEL MATHEUS",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -1067.0,
-   "descricao": "VALE MARILSA ",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-20",
-   "valor": -775.0,
-   "descricao": "VALE NARA",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
   },
   {
    "data": "2026-08-20",
@@ -1363,20 +1339,20 @@
   {
    "id": "110255",
    "nome": "SOL DI VERAO",
-   "saldo": -6679.49
+   "saldo": -8521.49
   }
  ],
  "movimento": {
   "mes": {
    "entrou": 17242.51,
-   "saiu": 26729.19,
-   "saldo": -9486.68,
+   "saiu": 28571.19,
+   "saldo": -11328.68,
    "desde": "2026-08-01"
   },
   "trimestre": {
    "entrou": 108951.58,
-   "saiu": 123866.74,
-   "saldo": -14915.16,
+   "saiu": 125708.74,
+   "saldo": -16757.16,
    "desde": "2026-05-23"
   }
  },
