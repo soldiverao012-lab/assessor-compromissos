@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-21T16:42:36.319495-03:00",
+ "atualizado_em": "2026-08-21T17:44:20.721591-03:00",
  "referencia": "2026-08-21",
  "abertos": [
   {
@@ -300,14 +300,6 @@
   },
   {
    "data": "2026-08-20",
-   "valor": -120.0,
-   "descricao": "Transportadora Macedo Ubatuba - fatura 0003304 - frete",
-   "conta": "SOL DI VERAO",
-   "situacao": "atrasado",
-   "dias": 1
-  },
-  {
-   "data": "2026-08-20",
    "valor": -81.9,
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
@@ -366,6 +358,14 @@
    "data": "2026-08-27",
    "valor": -4100.0,
    "descricao": "ALUGUEL CAP FELIPE ",
+   "conta": "SOL DI VERAO",
+   "situacao": "futuro",
+   "dias": -6
+  },
+  {
+   "data": "2026-08-27",
+   "valor": -120.0,
+   "descricao": "FRETE DEFATO - fatura 0003374-0, CT-e 6397, NF-e 464016 Advance",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
    "dias": -6
