@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-21T17:44:20.721591-03:00",
+ "atualizado_em": "2026-08-21T18:43:26.718827-03:00",
  "referencia": "2026-08-21",
  "abertos": [
   {
@@ -129,14 +129,6 @@
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
    "dias": 86
-  },
-  {
-   "data": "2026-06-29",
-   "valor": -764.0,
-   "descricao": "CHEQUE RUBÃO",
-   "conta": "M.O FRANCISCO",
-   "situacao": "atrasado",
-   "dias": 53
   },
   {
    "data": "2026-06-29",
