@@ -21,8 +21,14 @@ Regras de convivência (o motivo de cada uma está na constante):
   • Nunca cobra de madrugada.
   • Nunca cobra evento de dia inteiro.
   • Cobra menos vezes conforme a tarefa envelhece, em vez de martelar igual.
+
+Uso na mão:
+    python pendencias.py            # lista o que está em aberto (não envia nada)
+    python pendencias.py --cobrar   # roda a cobrança de verdade, agora
+    python pendencias.py --testar   # manda UMA cobrança de exemplo, pra você
+                                    # ver como chega e testar os botões
 """
-import re
+import sys
 from datetime import datetime, timedelta
 
 import assessor as app
@@ -257,3 +263,35 @@ def linhas(svc, agora=None, limite=5):
     if len(pend) > limite:
         saida.append(f"• … e mais {len(pend) - limite}")
     return saida
+
+
+# ── Uso na mão ───────────────────────────────────────────────────────────────
+def main():
+    sys.stdout.reconfigure(encoding="utf-8")
+    app.checar_credenciais()
+    svc = app.calendario()
+    agora = datetime.now(app.TZ)
+    pend = listar(svc, agora)
+
+    print(f"⏳ {len(pend)} pendente(s):")
+    for ev in pend:
+        marca = "cobrado" if _cobrado_em(ev) else "sem cobrança"
+        print(f"   {fim_do_evento(ev).strftime('%d/%m %H:%M')}  "
+              f"{_limpar(ev.get('summary'), 45):<46} ({marca})")
+
+    if "--cobrar" in sys.argv:
+        print(f"\n📨 {cobrar(svc, agora)} cobrança(s) enviada(s).")
+    elif "--testar" in sys.argv:
+        if not pend:
+            print("\nNada pendente — nada pra mostrar.")
+            return
+        ev = pend[-1]                      # o mais recente
+        app.enviar(texto_cobranca(ev), botoes=botoes(ev))
+        print(f"\n📨 exemplo enviado: {_limpar(ev.get('summary'))}")
+        print("   (não marquei como cobrado — é só uma amostra)")
+    else:
+        print("\n(nada foi enviado — use --cobrar ou --testar)")
+
+
+if __name__ == "__main__":
+    main()

@@ -58,6 +58,14 @@ offline (não toca no Telegram nem na agenda de verdade):
 .venv\Scripts\python testar_cobranca.py
 ```
 
+Pra olhar (ou forçar) a cobrança na mão:
+
+```powershell
+.venv\Scripts\python pendencias.py            # só lista o que está em aberto
+.venv\Scripts\python pendencias.py --cobrar   # roda a cobrança agora, de verdade
+.venv\Scripts\python pendencias.py --testar   # manda uma cobrança de exemplo
+```
+
 ---
 
 ## ☀️ O Briefing do dia (`briefing.py`)
