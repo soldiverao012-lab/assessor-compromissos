@@ -1,5 +1,5 @@
 {
- "atualizado_em": "2026-08-21T12:52:55.016352-03:00",
+ "atualizado_em": "2026-08-21T13:56:30.529147-03:00",
  "referencia": "2026-08-21",
  "abertos": [
   {
@@ -1358,25 +1358,25 @@
   {
    "id": "61913",
    "nome": "M.O FRANCISCO",
-   "saldo": -1564.16
+   "saldo": -6509.37
   },
   {
    "id": "110255",
    "nome": "SOL DI VERAO",
-   "saldo": -9684.36
+   "saldo": -6679.49
   }
  ],
  "movimento": {
   "mes": {
-   "entrou": 12187.72,
-   "saiu": 19734.06,
-   "saldo": -7546.34,
+   "entrou": 17242.51,
+   "saiu": 26729.19,
+   "saldo": -9486.68,
    "desde": "2026-08-01"
   },
   "trimestre": {
-   "entrou": 103896.79,
-   "saiu": 116871.61,
-   "saldo": -12974.82,
+   "entrou": 108951.58,
+   "saiu": 123866.74,
+   "saldo": -14915.16,
    "desde": "2026-05-23"
   }
  },
