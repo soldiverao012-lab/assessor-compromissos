@@ -1,6 +1,6 @@
 {
- "atualizado_em": "2026-08-21T22:53:55.124450-03:00",
- "referencia": "2026-08-21",
+ "atualizado_em": "2026-08-22T00:11:13.279960-03:00",
+ "referencia": "2026-08-22",
  "abertos": [
   {
    "data": "2026-02-26",
@@ -8,7 +8,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 176
+   "dias": 177
   },
   {
    "data": "2026-02-26",
@@ -16,7 +16,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 176
+   "dias": 177
   },
   {
    "data": "2026-02-28",
@@ -24,7 +24,7 @@
    "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 174
+   "dias": 175
   },
   {
    "data": "2026-03-02",
@@ -32,7 +32,7 @@
    "descricao": "frete defato",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 172
+   "dias": 173
   },
   {
    "data": "2026-03-02",
@@ -40,7 +40,7 @@
    "descricao": "frete defato",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 172
+   "dias": 173
   },
   {
    "data": "2026-03-24",
@@ -48,7 +48,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 150
+   "dias": 151
   },
   {
    "data": "2026-03-24",
@@ -56,7 +56,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 150
+   "dias": 151
   },
   {
    "data": "2026-03-24",
@@ -64,7 +64,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 150
+   "dias": 151
   },
   {
    "data": "2026-03-24",
@@ -72,7 +72,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 150
+   "dias": 151
   },
   {
    "data": "2026-03-30",
@@ -80,7 +80,7 @@
    "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 144
+   "dias": 145
   },
   {
    "data": "2026-04-20",
@@ -88,7 +88,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 123
+   "dias": 124
   },
   {
    "data": "2026-04-20",
@@ -96,7 +96,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 123
+   "dias": 124
   },
   {
    "data": "2026-05-11",
@@ -104,7 +104,7 @@
    "descricao": "\tPAGTO ELETRON COBRANCA BRADESCO AUTO/RE CIA DE SEGUROS",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 102
+   "dias": 103
   },
   {
    "data": "2026-05-14",
@@ -112,7 +112,7 @@
    "descricao": "10 Lampadas elgin",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 99
+   "dias": 100
   },
   {
    "data": "2026-05-27",
@@ -120,7 +120,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 86
+   "dias": 87
   },
   {
    "data": "2026-05-27",
@@ -128,7 +128,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 86
+   "dias": 87
   },
   {
    "data": "2026-06-29",
@@ -136,7 +136,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 53
+   "dias": 54
   },
   {
    "data": "2026-06-29",
@@ -144,7 +144,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 53
+   "dias": 54
   },
   {
    "data": "2026-07-25",
@@ -152,7 +152,7 @@
    "descricao": "LINHAS E ARMARINHOS",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 27
+   "dias": 28
   },
   {
    "data": "2026-07-25",
@@ -160,7 +160,7 @@
    "descricao": "serasa",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 27
+   "dias": 28
   },
   {
    "data": "2026-07-25",
@@ -168,7 +168,7 @@
    "descricao": "meli mais",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 27
+   "dias": 28
   },
   {
    "data": "2026-07-27",
@@ -176,7 +176,7 @@
    "descricao": "SHOPIFY* 523721504",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 25
+   "dias": 26
   },
   {
    "data": "2026-07-27",
@@ -184,7 +184,7 @@
    "descricao": "SHOPIFY* 523721504",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 25
+   "dias": 26
   },
   {
    "data": "2026-07-27",
@@ -192,7 +192,7 @@
    "descricao": "elasticos",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 25
+   "dias": 26
   },
   {
    "data": "2026-07-31",
@@ -200,7 +200,7 @@
    "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 21
+   "dias": 22
   },
   {
    "data": "2026-08-01",
@@ -208,7 +208,7 @@
    "descricao": "AGUA",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 20
+   "dias": 21
   },
   {
    "data": "2026-08-01",
@@ -216,7 +216,7 @@
    "descricao": "SHOPIFY* 523721504",
    "conta": "Cartão Empresarial",
    "situacao": "atrasado",
-   "dias": 20
+   "dias": 21
   },
   {
    "data": "2026-08-14",
@@ -224,7 +224,7 @@
    "descricao": "TARIFA CESTA EMPRESARIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 7
+   "dias": 8
   },
   {
    "data": "2026-08-20",
@@ -232,7 +232,7 @@
    "descricao": "FGTS CAP FEL",
    "conta": "SOL DI VERAO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -240,7 +240,7 @@
    "descricao": "BAIXA MEI MARILSA",
    "conta": "SOL DI VERAO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -248,7 +248,7 @@
    "descricao": "CONTABILIDADE CAP FELIPE",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -256,7 +256,7 @@
    "descricao": "IPTU",
    "conta": "SOL DI VERAO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -264,7 +264,7 @@
    "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -272,7 +272,7 @@
    "descricao": "AGUA",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -280,7 +280,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -288,7 +288,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -296,7 +296,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-20",
@@ -304,7 +304,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "atrasado",
-   "dias": 1
+   "dias": 2
   },
   {
    "data": "2026-08-25",
@@ -312,7 +312,7 @@
    "descricao": "tecidos diversos vivaflor",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -4
+   "dias": -3
   },
   {
    "data": "2026-08-25",
@@ -320,7 +320,7 @@
    "descricao": "DM*GoDaddycomL",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -4
+   "dias": -3
   },
   {
    "data": "2026-08-25",
@@ -328,7 +328,7 @@
    "descricao": "ADOBE JOAO",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -4
+   "dias": -3
   },
   {
    "data": "2026-08-25",
@@ -336,7 +336,7 @@
    "descricao": "meli mais",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -4
+   "dias": -3
   },
   {
    "data": "2026-08-26",
@@ -344,7 +344,7 @@
    "descricao": "\tCONTA DE TELEFONE VIVO MOVEL-SP-11161992884",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -5
+   "dias": -4
   },
   {
    "data": "2026-08-27",
@@ -352,7 +352,7 @@
    "descricao": "ALUGUEL CAP FELIPE ",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -6
+   "dias": -5
   },
   {
    "data": "2026-08-27",
@@ -360,7 +360,7 @@
    "descricao": "FRETE DEFATO - fatura 0003374-0, CT-e 6397, NF-e 464016 Advance",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -6
+   "dias": -5
   },
   {
    "data": "2026-08-30",
@@ -368,7 +368,7 @@
    "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -9
+   "dias": -8
   },
   {
    "data": "2026-09-01",
@@ -376,7 +376,7 @@
    "descricao": "FERIAS ROMILDA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -11
+   "dias": -10
   },
   {
    "data": "2026-09-01",
@@ -384,7 +384,7 @@
    "descricao": "AGUA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -11
+   "dias": -10
   },
   {
    "data": "2026-09-01",
@@ -392,7 +392,7 @@
    "descricao": "SHOPIFY* 523721504",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -11
+   "dias": -10
   },
   {
    "data": "2026-09-03",
@@ -400,7 +400,7 @@
    "descricao": "LUZ LOJA 1",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -13
+   "dias": -12
   },
   {
    "data": "2026-09-03",
@@ -408,7 +408,7 @@
    "descricao": "CONTABILIDADE CAP FELIPE",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -13
+   "dias": -12
   },
   {
    "data": "2026-09-03",
@@ -416,7 +416,7 @@
    "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -13
+   "dias": -12
   },
   {
    "data": "2026-09-05",
@@ -424,7 +424,7 @@
    "descricao": "ACB  GROWTH",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -15
+   "dias": -14
   },
   {
    "data": "2026-09-07",
@@ -432,7 +432,7 @@
    "descricao": "FERIAS MARILSA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -17
+   "dias": -16
   },
   {
    "data": "2026-09-07",
@@ -440,7 +440,7 @@
    "descricao": "ACB  GROWTH",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -17
+   "dias": -16
   },
   {
    "data": "2026-09-10",
@@ -448,7 +448,7 @@
    "descricao": "SALARIO MATHEUS",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -456,7 +456,7 @@
    "descricao": "Salário Marilsa",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -464,7 +464,7 @@
    "descricao": "SALARIO NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -472,7 +472,7 @@
    "descricao": "Salário Romilda",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -480,7 +480,7 @@
    "descricao": "COMISSÃO ROMILDA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -488,7 +488,7 @@
    "descricao": "IPTU",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -496,7 +496,7 @@
    "descricao": "freelancer alice",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -504,7 +504,7 @@
    "descricao": "COMISSAO NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -512,7 +512,7 @@
    "descricao": "CARTAO MATHEUS - acordo 29/07/2026 - parcela 02/36",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -520,7 +520,7 @@
    "descricao": "ACADEMIA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -528,7 +528,7 @@
    "descricao": "freelancer eloah",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -536,7 +536,7 @@
    "descricao": "CESTA BASICA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -544,7 +544,7 @@
    "descricao": "vale lanche romilda",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -552,7 +552,7 @@
    "descricao": "LANCHE FUNCIONARIAS",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-10",
@@ -560,7 +560,7 @@
    "descricao": "LANCHE",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -20
+   "dias": -19
   },
   {
    "data": "2026-09-11",
@@ -568,7 +568,7 @@
    "descricao": "TARIFA CESTA EMPRESARIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -21
+   "dias": -20
   },
   {
    "data": "2026-09-12",
@@ -576,7 +576,7 @@
    "descricao": "EMPRESTIMO CREDITAS, TRANSFERIR DINHEIRO PARA CONTA FISICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -22
+   "dias": -21
   },
   {
    "data": "2026-09-15",
@@ -584,7 +584,7 @@
    "descricao": "ALUGUEL MATHEUS",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -592,7 +592,7 @@
    "descricao": "MENSALIDADE CONSYSA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -600,7 +600,7 @@
    "descricao": "TARIFA CESTA EMPRESARIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -608,7 +608,7 @@
    "descricao": "TARIFA BANCO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -616,7 +616,7 @@
    "descricao": "INTERNET ",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -624,7 +624,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -632,7 +632,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-15",
@@ -640,7 +640,7 @@
    "descricao": "INTERNET FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -25
+   "dias": -24
   },
   {
    "data": "2026-09-17",
@@ -648,7 +648,7 @@
    "descricao": "ADVANCE TEXTIL - NF-e 463438 de 06/08/2026 - dupl 001/003 (fatura 921324) - tecido praia/lycra",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -27
+   "dias": -26
   },
   {
    "data": "2026-09-18",
@@ -656,7 +656,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -28
+   "dias": -27
   },
   {
    "data": "2026-09-18",
@@ -664,7 +664,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -28
+   "dias": -27
   },
   {
    "data": "2026-09-20",
@@ -672,7 +672,7 @@
    "descricao": "EMPRESTIMO BRADESCO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -680,7 +680,7 @@
    "descricao": "VALE MARILSA ",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -688,7 +688,7 @@
    "descricao": "VALE ROMILDA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -696,7 +696,7 @@
    "descricao": "VALE NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -704,7 +704,7 @@
    "descricao": "CONTABILIDADE CAP FELIPE",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -712,7 +712,7 @@
    "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -720,7 +720,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-20",
@@ -728,7 +728,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -30
+   "dias": -29
   },
   {
    "data": "2026-09-24",
@@ -736,7 +736,7 @@
    "descricao": "claude",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -34
+   "dias": -33
   },
   {
    "data": "2026-09-25",
@@ -744,7 +744,7 @@
    "descricao": "TECIDOS VIVA FLOR",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -752,7 +752,7 @@
    "descricao": "tecidos diversos vivaflor",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -760,7 +760,7 @@
    "descricao": "ASSINATURA GRANATUM",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -768,7 +768,7 @@
    "descricao": "DM*GoDaddycomL",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -776,7 +776,7 @@
    "descricao": "ADOBE JOAO",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -784,7 +784,7 @@
    "descricao": "serasa",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -792,7 +792,7 @@
    "descricao": "anuidade cartao empresarial credito",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-25",
@@ -800,7 +800,7 @@
    "descricao": "meli mais",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -35
+   "dias": -34
   },
   {
    "data": "2026-09-26",
@@ -808,7 +808,7 @@
    "descricao": "\tCONTA DE TELEFONE VIVO MOVEL-SP-11161992884",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -36
+   "dias": -35
   },
   {
    "data": "2026-09-27",
@@ -816,7 +816,7 @@
    "descricao": "ALUGUEL CAP FELIPE ",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -37
+   "dias": -36
   },
   {
    "data": "2026-10-01",
@@ -824,7 +824,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -832,7 +832,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -840,7 +840,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -848,7 +848,7 @@
    "descricao": "SIMPLES NACIONAL VENC IMENTO MAIO",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -856,7 +856,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -864,7 +864,7 @@
    "descricao": "ADVANCE TEXTIL - NF-e 463438 de 06/08/2026 - dupl 002/003 (fatura 921324) - tecido praia/lycra",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -872,7 +872,7 @@
    "descricao": "E SOCIAL MAIO",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -880,7 +880,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -888,7 +888,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -896,7 +896,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -904,7 +904,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -912,7 +912,7 @@
    "descricao": "FGTS OUTUBRO 2025",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -920,7 +920,7 @@
    "descricao": "FGTS NOVEMBRO 25",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -928,7 +928,7 @@
    "descricao": "FGTS CAP FEL",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -936,7 +936,7 @@
    "descricao": "FGTS CAP FEL",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -944,7 +944,7 @@
    "descricao": "FGTS DEZEMBRO 25",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -952,7 +952,7 @@
    "descricao": "FGTS CAP FEL SETEMBRO 25",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -960,7 +960,7 @@
    "descricao": "PARCELAMENTO 1",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -968,7 +968,7 @@
    "descricao": "AGUA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-01",
@@ -976,7 +976,7 @@
    "descricao": "SHOPIFY* 523721504",
    "conta": "Cartão Empresarial",
    "situacao": "futuro",
-   "dias": -41
+   "dias": -40
   },
   {
    "data": "2026-10-03",
@@ -984,7 +984,7 @@
    "descricao": "LUZ LOJA 1",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -43
+   "dias": -42
   },
   {
    "data": "2026-10-05",
@@ -992,7 +992,7 @@
    "descricao": "ferias nara",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -45
+   "dias": -44
   },
   {
    "data": "2026-10-05",
@@ -1000,7 +1000,7 @@
    "descricao": "ACB  GROWTH",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -45
+   "dias": -44
   },
   {
    "data": "2026-10-10",
@@ -1008,7 +1008,7 @@
    "descricao": "SALARIO MATHEUS",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1016,7 +1016,7 @@
    "descricao": "Salário Marilsa",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1024,7 +1024,7 @@
    "descricao": "SALARIO NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1032,7 +1032,7 @@
    "descricao": "Salário Romilda",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1040,7 +1040,7 @@
    "descricao": "COMISSÃO ROMILDA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1048,7 +1048,7 @@
    "descricao": "IPTU",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1056,7 +1056,7 @@
    "descricao": "freelancer alice",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1064,7 +1064,7 @@
    "descricao": "COMISSAO NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1072,7 +1072,7 @@
    "descricao": "CARTAO MATHEUS - acordo 29/07/2026 - parcela 03/36",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1080,7 +1080,7 @@
    "descricao": "ACADEMIA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1088,7 +1088,7 @@
    "descricao": "freelancer eloah",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1096,7 +1096,7 @@
    "descricao": "CESTA BASICA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1104,7 +1104,7 @@
    "descricao": "vale lanche romilda",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1112,7 +1112,7 @@
    "descricao": "LANCHE FUNCIONARIAS",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-10",
@@ -1120,7 +1120,7 @@
    "descricao": "LANCHE",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -50
+   "dias": -49
   },
   {
    "data": "2026-10-11",
@@ -1128,7 +1128,7 @@
    "descricao": "TARIFA CESTA EMPRESARIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -51
+   "dias": -50
   },
   {
    "data": "2026-10-12",
@@ -1136,7 +1136,7 @@
    "descricao": "EMPRESTIMO CREDITAS, TRANSFERIR DINHEIRO PARA CONTA FISICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -52
+   "dias": -51
   },
   {
    "data": "2026-10-13",
@@ -1144,7 +1144,7 @@
    "descricao": "ADVANCE TEXTIL - NF-e 464016 de 18/08/2026 - dupl 001/003 (fatura 921902) - tecido praia/lycra",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -53
+   "dias": -52
   },
   {
    "data": "2026-10-15",
@@ -1152,7 +1152,7 @@
    "descricao": "ALUGUEL MATHEUS",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1160,7 +1160,7 @@
    "descricao": "ADVANCE TEXTIL - NF-e 463438 de 06/08/2026 - dupl 003/003 (fatura 921324) - tecido praia/lycra",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1168,7 +1168,7 @@
    "descricao": "MENSALIDADE CONSYSA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1176,7 +1176,7 @@
    "descricao": "TARIFA CESTA EMPRESARIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1184,7 +1184,7 @@
    "descricao": "TARIFA BANCO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1192,7 +1192,7 @@
    "descricao": "INTERNET ",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1200,7 +1200,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1208,7 +1208,7 @@
    "descricao": "SEGURANÇA DO TRABALHO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-15",
@@ -1216,7 +1216,7 @@
    "descricao": "INTERNET FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -55
+   "dias": -54
   },
   {
    "data": "2026-10-18",
@@ -1224,7 +1224,7 @@
    "descricao": "E SOCIAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -58
+   "dias": -57
   },
   {
    "data": "2026-10-20",
@@ -1232,7 +1232,7 @@
    "descricao": "EMPRESTIMO BRADESCO",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1240,7 +1240,7 @@
    "descricao": "SIMPLES NACIONAL",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1248,7 +1248,7 @@
    "descricao": "VALE MARILSA ",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1256,7 +1256,7 @@
    "descricao": "VALE ROMILDA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1264,7 +1264,7 @@
    "descricao": "VALE NARA",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1272,7 +1272,7 @@
    "descricao": "FGTS CAP FEL",
    "conta": "SOL DI VERAO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1280,7 +1280,7 @@
    "descricao": "CONTABILIDADE CAP FELIPE",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1288,7 +1288,7 @@
    "descricao": "CONTABILIDADE FABRICA",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1296,7 +1296,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   },
   {
    "data": "2026-10-20",
@@ -1304,7 +1304,7 @@
    "descricao": "SIMPLES/MEI",
    "conta": "M.O FRANCISCO",
    "situacao": "futuro",
-   "dias": -60
+   "dias": -59
   }
  ],
  "contas": [
@@ -1342,10 +1342,10 @@
    "desde": "2026-08-01"
   },
   "trimestre": {
-   "entrou": 108951.58,
+   "entrou": 108852.67,
    "saiu": 125708.74,
-   "saldo": -16757.16,
-   "desde": "2026-05-23"
+   "saldo": -16856.07,
+   "desde": "2026-05-24"
   }
  },
  "vendas": null
